@@ -1,0 +1,46 @@
+{
+  "validProducts": [
+    {
+      "_id": "1",
+      "name": "Classic T-Shirt",
+      "title": "Classic T-Shirt",
+      "description": "A comfortable classic t-shirt",
+      "category": "Clothing",
+      "price": 1999,
+      "qty": 50,
+      "status": "in stock",
+      "image": "/api/uploads/image1.jpg",
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "_id": "2",
+      "name": "Coffee Mug",
+      "title": "Coffee Mug",
+      "description": "Ceramic coffee mug",
+      "category": "Accessories",
+      "price": 899,
+      "qty": 25,
+      "status": "in stock",
+      "image": "/api/uploads/image2.jpg",
+      "createdAt": "2024-01-02T00:00:00.000Z"
+    }
+  ],
+  "newProduct": {
+    "name": "New Product",
+    "category": "Electronics",
+    "description": "New product description",
+    "price": "2999",
+    "qty": "50",
+    "status": "in stock"
+  },
+  "updateProduct": {
+    "name": "Updated Product",
+    "price": "2499"
+  },
+  "invalidProduct": {
+    "name": "",
+    "category": "",
+    "price": "-100",
+    "qty": "-10"
+  }
+}

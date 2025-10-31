@@ -1,0 +1,15 @@
+{
+  "emptyFields": {
+    "title": "Title is required",
+    "content": "Content is required"
+  },
+  "shortTitle": {
+    "title": "Title must be at least 3 characters long"
+  },
+  "longTitle": {
+    "title": "Title must not exceed 100 characters"
+  },
+  "shortContent": {
+    "content": "Content must be at least 10 characters long"
+  }
+}

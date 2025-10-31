@@ -1,0 +1,45 @@
+{
+  "success": {
+    "create": {
+      "statusCode": 201,
+      "body": {
+        "success": true,
+        "data": { "_id": "new-123" }
+      }
+    },
+    "update": {
+      "statusCode": 200,
+      "body": {
+        "success": true,
+        "data": { "_id": "123" }
+      }
+    },
+    "delete": {
+      "statusCode": 200,
+      "body": {
+        "success": true,
+        "message": "Order deleted successfully"
+      }
+    }
+  },
+  "errors": {
+    "validation": {
+      "statusCode": 400,
+      "body": {
+        "message": "Validation error"
+      }
+    },
+    "notFound": {
+      "statusCode": 404,
+      "body": {
+        "message": "Order not found"
+      }
+    },
+    "serverError": {
+      "statusCode": 500,
+      "body": {
+        "message": "Server error"
+      }
+    }
+  }
+}

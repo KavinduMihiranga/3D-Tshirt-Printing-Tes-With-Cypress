@@ -1,0 +1,62 @@
+{
+  "validAdmins": [
+    {
+      "_id": "1",
+      "username": "admin1",
+      "email": "admin1@example.com",
+      "password": "Password123",
+      "phone": "0771234567",
+      "nic": "123456789V",
+      "role": "admin",
+      "status": "Active",
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "_id": "2",
+      "username": "superadmin",
+      "email": "super@example.com",
+      "password": "SuperPass456",
+      "phone": "0779876543",
+      "nic": "987654321V",
+      "role": "superadmin",
+      "status": "Active",
+      "createdAt": "2024-01-02T00:00:00.000Z"
+    }
+  ],
+  "newAdmin": {
+    "username": "newadmin",
+    "email": "newadmin@example.com",
+    "password": "NewPass789",
+    "phone": "0775551234",
+    "nic": "555666777V",
+    "role": "admin"
+  },
+  "updateAdmin": {
+    "username": "updatedadmin",
+    "phone": "0771111111"
+  },
+  "invalidAdmin": {
+    "username": "",
+    "email": "invalid-email",
+    "phone": "invalid-phone",
+    "password": "123"
+  },
+  "edgeCases": {
+    "longUsername": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "specialCharacters": "@#$%^&*()",
+    "emptyFields": {
+      "username": "",
+      "email": "",
+      "phone": "",
+      "password": ""
+    }
+  },
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "statuses": {
+    "active": "Active",
+    "inactive": "Inactive"
+  }
+}

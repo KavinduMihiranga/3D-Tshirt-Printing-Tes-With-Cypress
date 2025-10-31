@@ -1,0 +1,60 @@
+{
+  "success": {
+    "create": {
+      "statusCode": 200,
+      "body": {
+        "message": "Admin added successfully",
+        "data": {
+          "_id": "123"
+        }
+      }
+    },
+    "update": {
+      "statusCode": 200,
+      "body": {
+        "message": "Admin updated successfully",
+        "data": {
+          "_id": "123"
+        }
+      }
+    },
+    "delete": {
+      "statusCode": 200,
+      "body": {
+        "message": "Admin deleted successfully"
+      }
+    },
+    "get": {
+      "statusCode": 200,
+      "body": {
+        "data": []
+      }
+    }
+  },
+  "errors": {
+    "serverError": {
+      "statusCode": 500,
+      "body": {
+        "message": "Internal Server Error"
+      }
+    },
+    "validationError": {
+      "statusCode": 400,
+      "body": {
+        "message": "Validation error"
+      }
+    },
+    "notFound": {
+      "statusCode": 404,
+      "body": {
+        "message": "Admin not found"
+      }
+    },
+    "unauthorized": {
+      "statusCode": 401,
+      "body": {
+        "message": "Session expired. Please login again."
+      }
+    }
+  }
+}

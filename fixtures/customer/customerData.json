@@ -1,0 +1,64 @@
+{
+  "validCustomers": [
+    {
+      "_id": "1",
+      "name": "John Doe",
+      "gender": "Male",
+      "email": "john.doe@example.com",
+      "password": "Password123",
+      "nic": "123456789V",
+      "phone": "0771234567",
+      "addressLine1": "123 Main Street",
+      "addressLine2": "Apt 4B",
+      "city": "Colombo",
+      "country": "Sri Lanka",
+      "status": "Active",
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "_id": "2",
+      "name": "Jane Smith",
+      "gender": "Female",
+      "email": "jane.smith@example.com",
+      "password": "Password456",
+      "nic": "987654321V",
+      "phone": "0779876543",
+      "addressLine1": "456 Oak Avenue",
+      "addressLine2": "Suite 100",
+      "city": "Kandy",
+      "country": "Sri Lanka",
+      "status": "Active",
+      "createdAt": "2024-01-02T00:00:00.000Z"
+    }
+  ],
+  "newCustomer": {
+    "name": "Alice Johnson",
+    "gender": "Female",
+    "email": "alice.johnson@example.com",
+    "password": "SecurePass789",
+    "nic": "555666777V",
+    "phone": "0775551234",
+    "addressLine1": "789 Pine Road",
+    "addressLine2": "",
+    "city": "Galle",
+    "country": "Sri Lanka"
+  },
+  "updateCustomer": {
+    "name": "John Doe Updated",
+    "phone": "0771111111"
+  },
+  "invalidCustomer": {
+    "name": "",
+    "email": "invalid-email",
+    "phone": "invalid-phone"
+  },
+  "edgeCases": {
+    "longName": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "specialCharacters": "@#$%^&*()",
+    "emptyFields": {
+      "name": "",
+      "email": "",
+      "phone": ""
+    }
+  }
+}

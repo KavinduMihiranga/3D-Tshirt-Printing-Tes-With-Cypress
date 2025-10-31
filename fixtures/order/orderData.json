@@ -1,0 +1,42 @@
+{
+  "validOrders": [
+    {
+      "_id": "1",
+      "customerName": "John Doe",
+      "tShirtName": "Classic Tee",
+      "address": "123 Main St, City, State",
+      "qty": 5,
+      "date": "2024-01-15",
+      "status": "Pending",
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "_id": "2",
+      "customerName": "Jane Smith",
+      "tShirtName": "Premium Polo",
+      "address": "456 Oak Ave, Town, State",
+      "qty": 3,
+      "date": "2024-01-16",
+      "status": "Completed",
+      "createdAt": "2024-01-02T00:00:00.000Z"
+    }
+  ],
+  "newOrder": {
+    "customerName": "New Customer",
+    "tShirtName": "New T-Shirt",
+    "address": "789 Pine Rd, Village, State",
+    "qty": "2",
+    "date": "2024-01-20",
+    "status": "Pending"
+  },
+  "updateOrder": {
+    "customerName": "Updated Customer",
+    "tShirtName": "Updated Shirt",
+    "qty": "10"
+  },
+  "invalidOrder": {
+    "customerName": "",
+    "tShirtName": "",
+    "qty": "-1"
+  }
+}

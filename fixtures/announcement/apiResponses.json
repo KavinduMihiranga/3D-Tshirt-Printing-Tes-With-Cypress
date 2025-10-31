@@ -1,0 +1,49 @@
+{
+  "success": {
+    "create": {
+      "statusCode": 201,
+      "body": {
+        "message": "Announcement created successfully",
+        "data": {
+          "_id": "new-123"
+        }
+      }
+    },
+    "update": {
+      "statusCode": 200,
+      "body": {
+        "message": "Announcement updated successfully"
+      }
+    },
+    "delete": {
+      "statusCode": 200,
+      "body": {
+        "message": "Announcement deleted successfully"
+      }
+    }
+  },
+  "errors": {
+    "validation": {
+      "statusCode": 400,
+      "body": {
+        "message": "Validation failed",
+        "errors": {
+          "title": "Title is required",
+          "content": "Content is required"
+        }
+      }
+    },
+    "notFound": {
+      "statusCode": 404,
+      "body": {
+        "message": "Announcement not found"
+      }
+    },
+    "serverError": {
+      "statusCode": 500,
+      "body": {
+        "message": "Internal server error"
+      }
+    }
+  }
+}

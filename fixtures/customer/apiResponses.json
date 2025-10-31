@@ -1,0 +1,60 @@
+{
+  "success": {
+    "create": {
+      "statusCode": 201,
+      "body": {
+        "message": "Customer created successfully",
+        "data": {
+          "_id": "123"
+        }
+      }
+    },
+    "update": {
+      "statusCode": 200,
+      "body": {
+        "message": "Customer updated successfully",
+        "data": {
+          "_id": "123"
+        }
+      }
+    },
+    "delete": {
+      "statusCode": 200,
+      "body": {
+        "message": "Customer deleted successfully"
+      }
+    },
+    "get": {
+      "statusCode": 200,
+      "body": {
+        "data": []
+      }
+    }
+  },
+  "errors": {
+    "serverError": {
+      "statusCode": 500,
+      "body": {
+        "message": "Internal Server Error"
+      }
+    },
+    "validationError": {
+      "statusCode": 400,
+      "body": {
+        "message": "Validation error"
+      }
+    },
+    "notFound": {
+      "statusCode": 404,
+      "body": {
+        "message": "Customer not found"
+      }
+    },
+    "unauthorized": {
+      "statusCode": 401,
+      "body": {
+        "message": "Unauthorized"
+      }
+    }
+  }
+}
