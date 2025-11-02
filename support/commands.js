@@ -633,3 +633,16 @@ Cypress.Commands.add('navigateFromDashboard', (page) => {
     }
 });
 
+import ContactUsPage from './pageObjects/ContactUsPage';
+import ContactUsManagementPage from './pageObjects/ContactUsManagementPage';
+
+// Contact Us Page Commands
+Cypress.Commands.add('visitContactUsPage', () => {
+    const contactUsPage = new ContactUsPage();
+    return contactUsPage.visit();
+});
+
+Cypress.Commands.add('verifyContactUsPageLoaded', () => {
+    const contactUsPage = new ContactUsPage();
+    return contactUsPage.verifyPageLoaded();
+});

@@ -67,6 +67,13 @@ import './pageObjects/ResetPasswordPage';
 import './helpers/AuthApiHelpers';
 import './helpers/AuthDataGenerators';
 
+// Contact Us Page Object
+import './pageObjects/ContactUsPage';
+import './helpers/contactUsDataGenerators';
+import './pageObjects/ContactUsPage';
+import './pageObjects/ContactUsManagementPage';
+
+
 // Global beforeEach hook
 beforeEach(() => {
   // Set up any global test configurations
