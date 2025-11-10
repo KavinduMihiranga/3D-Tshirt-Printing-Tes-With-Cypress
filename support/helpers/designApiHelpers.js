@@ -1,44 +1,34 @@
 class DesignApiHelpers {
-    constructor() {
-        this.baseUrl = 'http://localhost:5000/api';
+    static mockDesignInquirySuccess() {
+        cy.intercept('POST', 'http://localhost:5000/api/design-inquiry', {
+            statusCode: 200,
+            body: {
+                success: true,
+                data: {
+                    _id: '12345',
+                    customerName: 'Test User',
+                    totalPrice: 4000
+                }
+            }
+        }).as('designInquiry');
     }
 
-    mockDesignInquirySuccess(alias = 'designInquiry') {
-        cy.intercept('POST', `${this.baseUrl}/design-inquiry`, {
+    static mockDesignInquiryError() {
+        cy.intercept('POST', 'http://localhost:5000/api/design-inquiry', {
+            statusCode: 500,
+            body: {
+                success: false,
+                message: 'Server error'
+            }
+        }).as('designInquiryError');
+    }
+
+    static mockExportSuccess() {
+        cy.intercept('POST', '**/export**', {
             statusCode: 200,
             body: { success: true }
-        }).as(alias);
-    }
-
-    mockDesignInquiryError(statusCode = 500, message = 'Server error', alias = 'designInquiryError') {
-        cy.intercept('POST', `${this.baseUrl}/design-inquiry`, {
-            statusCode: statusCode,
-            body: { message: message }
-        }).as(alias);
-    }
-
-    mockValidationError(alias = 'validationError') {
-        cy.intercept('POST', `${this.baseUrl}/design-inquiry`, {
-            statusCode: 400,
-            body: { message: 'Validation error' }
-        }).as(alias);
-    }
-
-    mockNetworkError(alias = 'networkError') {
-        cy.intercept('POST', `${this.baseUrl}/design-inquiry`, {
-            forceNetworkError: true
-        }).as(alias);
-    }
-
-    mockDelayedResponse(delay = 1000, alias = 'delayedDesignInquiry') {
-        cy.intercept('POST', `${this.baseUrl}/design-inquiry`, (req) => {
-            req.reply({
-                statusCode: 200,
-                body: { success: true },
-                delay
-            });
-        }).as(alias);
+        }).as('exportSuccess');
     }
 }
 
-export default new DesignApiHelpers();
+export default DesignApiHelpers;

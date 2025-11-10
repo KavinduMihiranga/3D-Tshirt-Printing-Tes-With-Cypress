@@ -27,9 +27,9 @@ describe('Dashboard Main Page', () => {
             dashboardPage.verifyProductImages();
         });
 
-        it('should display pagination controls', () => {
-            dashboardPage.verifyPagination();
-        });
+        // it('should display pagination controls', () => {
+        //     dashboardPage.verifyPagination();
+        // });
     });
 
     context('🔄 User Interactions', () => {

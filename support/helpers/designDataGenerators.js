@@ -1,69 +1,38 @@
 class DesignDataGenerators {
-    generateDesignData(overrides = {}) {
-        const baseDesign = {
-            customerName: 'Test Customer',
-            tShirtColor: '#000000',
-            designs: [],
-            sizes: {
-                XS: 0, S: 0, M: 0, L: 0, XL: 0, '2XL': 0, '3XL': 0
-            },
-            totalPrice: 0
-        };
-        return { ...baseDesign, ...overrides };
-    }
-
-    generateTextDesign(text = 'Test Design') {
-        return {
-            type: 'text',
-            content: text,
-            color: '#000000',
-            size: 0.3,
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { x: 0, y: 0, z: 0 }
-        };
-    }
-
-    generateImageDesign() {
-        return {
-            type: 'image',
-            content: 'mock-image-data',
-            scale: 1,
-            position: { x: 0, y: 0, z: 0 },
-            rotation: { x: 0, y: 0, z: 0 }
-        };
-    }
-
-    getValidSizeDistribution() {
-        return {
-            XS: 2, S: 3, M: 5, L: 4, XL: 3, '2XL': 2, '3XL': 1
-        };
-    }
-
-    getTestImageFile() {
+    static getTestImageFile() {
         return {
             fileName: 'test-image.jpg',
-            fileContent: Cypress.Buffer.from(
-                '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8U/9k=',
-                'base64'
-            )
+            fileContent: Cypress.Blob.fromBase64('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
         };
     }
 
-    getLargeImageFile() {
-        // Create a 6MB file
-        const largeContent = new Array(6 * 1024 * 1024).join('a');
+    static getLargeImageFile() {
+        // Create a mock large file (6MB)
+        const largeContent = new ArrayBuffer(6 * 1024 * 1024);
         return {
             fileName: 'large-image.jpg',
-            fileContent: Cypress.Buffer.from(largeContent)
+            fileContent: largeContent
         };
     }
 
-    getInvalidFile() {
+    static getCustomerInfo() {
         return {
-            fileName: 'test.txt',
-            fileContent: 'This is a text file, not an image'
+            name: 'Test User',
+            email: 'test@example.com',
+            phone: '+1234567890',
+            notes: 'Test order notes'
+        };
+    }
+
+    static getDesignData() {
+        return {
+            text: 'Test Design',
+            color: '#000000',
+            position: [0, 0, 0],
+            rotation: [0, 0, 0],
+            scale: 1.0
         };
     }
 }
 
-export default new DesignDataGenerators();
+export default DesignDataGenerators;

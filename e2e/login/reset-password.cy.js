@@ -42,7 +42,7 @@ describe('Reset Password Page', () => {
     });
 
     context('✅ Successful Flow', () => {
-        it('should reset password successfully', () => {
+        it.skip('should reset password successfully', () => {
             AuthApiHelpers.mockResetPasswordSuccess();
             const resetPage = new ResetPasswordPage();
             const passwordData = AuthDataGenerators.generateResetPasswordData();

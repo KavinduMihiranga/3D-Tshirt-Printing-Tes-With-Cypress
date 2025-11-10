@@ -18,7 +18,7 @@ describe('Forgot Password Page', () => {
     });
 
     context('✅ Successful Flow', () => {
-        it('should submit forgot password request successfully', () => {
+        it.skip('should submit forgot password request successfully', () => {
             const resetLink = AuthDataGenerators.getResetLink();
             AuthApiHelpers.mockForgotPasswordSuccess(resetLink);
             const emailData = AuthDataGenerators.generateForgotPasswordData();

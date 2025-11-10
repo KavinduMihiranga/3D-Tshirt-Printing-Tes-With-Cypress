@@ -1,67 +1,92 @@
-import AuthDataGenerators from './AuthDataGenerators';
+// cypress/support/helpers/CartApiHelpers.js
 
-class AuthApiHelpers {
-    constructor() {
-        this.baseUrl = 'http://localhost:5000/api/auth';
+class CartApiHelpers {
+    // Mock successful checkout response
+    static mockCheckoutSuccess() {
+        cy.intercept('POST', '/api/checkout', {
+            statusCode: 200,
+            body: {
+                success: true,
+                message: 'Order placed successfully',
+                orderId: 'ORD-12345',
+                total: 99.99
+            }
+        }).as('checkoutSuccess');
     }
 
-    mockLoginSuccess(userData = {}, alias = 'loginRequest') {
-        const response = AuthDataGenerators.getLoginSuccessResponse();
-        if (userData && Object.keys(userData).length > 0) {
-            response.body.data.user = { ...response.body.data.user, ...userData };
-        }
-        
-        cy.intercept('POST', `${this.baseUrl}/login`, response).as(alias);
-        return this;
+    // Mock checkout error response
+    static mockCheckoutError() {
+        cy.intercept('POST', '/api/checkout', {
+            statusCode: 400,
+            body: {
+                success: false,
+                error: 'Payment failed',
+                message: 'Insufficient funds'
+            }
+        }).as('checkoutError');
     }
 
-    mockLoginError(type = 'invalidCredentials', alias = 'loginError') {
-        const response = AuthDataGenerators.getLoginErrorResponse(type);
-        cy.intercept('POST', `${this.baseUrl}/login`, response).as(alias);
-        return this;
+    // Mock successful cart data retrieval
+    static mockGetCartSuccess(cartData) {
+        cy.intercept('GET', '/api/cart', {
+            statusCode: 200,
+            body: cartData
+        }).as('getCartSuccess');
     }
 
-    mockForgotPasswordSuccess(alias = 'forgotPasswordRequest') {
-        const response = AuthDataGenerators.getForgotPasswordSuccessResponse();
-        cy.intercept('POST', `${this.baseUrl}/forgot-password`, response).as(alias);
-        return this;
+    // Mock empty cart
+    static mockEmptyCart() {
+        cy.intercept('GET', '/api/cart', {
+            statusCode: 200,
+            body: {
+                items: [],
+                total: 0,
+                itemCount: 0
+            }
+        }).as('getEmptyCart');
     }
 
-    mockForgotPasswordError(type = 'emailNotFound', alias = 'forgotPasswordError') {
-        const response = AuthDataGenerators.getForgotPasswordErrorResponse(type);
-        cy.intercept('POST', `${this.baseUrl}/forgot-password`, response).as(alias);
-        return this;
+    // Mock cart not found
+    static mockCartNotFound() {
+        cy.intercept('GET', '/api/cart', {
+            statusCode: 404,
+            body: {
+                error: 'Cart not found'
+            }
+        }).as('cartNotFound');
     }
 
-    mockResetPasswordSuccess(alias = 'resetPasswordRequest') {
-        const response = AuthDataGenerators.getResetPasswordSuccessResponse();
-        cy.intercept('POST', `${this.baseUrl}/reset-password`, response).as(alias);
-        return this;
+    // Mock server error during checkout
+    static mockCheckoutServerError() {
+        cy.intercept('POST', '/api/checkout', {
+            statusCode: 500,
+            body: {
+                error: 'Internal server error'
+            }
+        }).as('checkoutServerError');
     }
 
-    mockResetPasswordError(type = 'invalidToken', alias = 'resetPasswordError') {
-        const response = AuthDataGenerators.getResetPasswordErrorResponse(type);
-        cy.intercept('POST', `${this.baseUrl}/reset-password`, response).as(alias);
-        return this;
-    }
-
-    mockNetworkError(endpoint, alias = 'networkError') {
-        cy.intercept('POST', `${this.baseUrl}/${endpoint}`, {
+    // Mock network error
+    static mockCheckoutNetworkError() {
+        cy.intercept('POST', '/api/checkout', {
             forceNetworkError: true
-        }).as(alias);
-        return this;
+        }).as('checkoutNetworkError');
     }
 
-    mockDelayedResponse(endpoint, delay = 2000, alias = 'delayedResponse') {
-        cy.intercept('POST', `${this.baseUrl}/${endpoint}`, (req) => {
-            req.reply({
-                statusCode: 200,
-                body: { success: true },
-                delay
-            });
-        }).as(alias);
-        return this;
+    // Wait for checkout API call
+    static waitForCheckout() {
+        cy.wait('@checkoutSuccess');
+    }
+
+    // Wait for checkout error
+    static waitForCheckoutError() {
+        cy.wait('@checkoutError');
+    }
+
+    // Wait for cart load
+    static waitForCartLoad() {
+        cy.wait('@getCartSuccess');
     }
 }
 
-export default new AuthApiHelpers();
+export default CartApiHelpers;

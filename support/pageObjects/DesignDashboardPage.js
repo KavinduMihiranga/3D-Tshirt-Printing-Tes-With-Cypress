@@ -12,7 +12,7 @@ class DesignDashboardPage extends BasePage {
     }
 
     verifyPageLoaded() {
-        cy.contains('👕 T-shirt').should('be.visible');
+        cy.contains('T-Shirt Design Studio').should('be.visible');
         cy.contains('Add Text').should('be.visible');
         cy.contains('Add Image').should('be.visible');
         return this;
@@ -24,19 +24,14 @@ class DesignDashboardPage extends BasePage {
         return this;
     }
 
-    clickAddImage() {
-        cy.contains('Add Image').click();
-        return this;
-    }
-
     // Color Picker
     selectColor(colorValue) {
-        cy.get(`button[style*="background-color: ${colorValue}"]`).click();
+        cy.get(`button[title="${colorValue}"]`).click();
         return this;
     }
 
     setCustomColor(colorHex) {
-        cy.get('input[type="color"]').invoke('val', colorHex).trigger('input');
+        cy.get('input[type="color"]').first().invoke('val', colorHex).trigger('input');
         return this;
     }
 
@@ -47,12 +42,12 @@ class DesignDashboardPage extends BasePage {
 
     // Size Management
     setSizeQuantity(size, quantity) {
-        cy.contains(size).siblings('input').clear().type(quantity.toString());
+        cy.contains(size).parent().find('input').clear().type(quantity.toString());
         return this;
     }
 
     verifySizeQuantity(size, expectedQuantity) {
-        cy.contains(size).siblings('input').should('have.value', expectedQuantity.toString());
+        cy.contains(size).parent().find('input').should('have.value', expectedQuantity.toString());
         return this;
     }
 
@@ -63,7 +58,7 @@ class DesignDashboardPage extends BasePage {
     }
 
     clickRemoveSelectedDesign() {
-        cy.contains('Remove Selected Design').click();
+        cy.contains('Remove Design').click();
         return this;
     }
 
@@ -83,6 +78,11 @@ class DesignDashboardPage extends BasePage {
         return this;
     }
 
+    clickDownloadGLTF() {
+        cy.contains('Download GLTF').click();
+        return this;
+    }
+
     clickDownloadPNG() {
         cy.contains('Download PNG').click();
         return this;
@@ -94,8 +94,8 @@ class DesignDashboardPage extends BasePage {
         return this;
     }
 
-    verifyExportStatus() {
-        cy.contains('Exporting design...').should('be.visible');
+    verifyExportStatus(message = 'Exporting design...') {
+        cy.contains(message).should('be.visible');
         return this;
     }
 
@@ -111,6 +111,50 @@ class DesignDashboardPage extends BasePage {
             fileName: fileName,
             mimeType: 'image/jpeg'
         }, { force: true });
+        return this;
+    }
+
+    uploadTextFile() {
+        cy.get('input[type="file"]').selectFile({
+            contents: Cypress.Blob.fromText('test'),
+            fileName: 'test.txt',
+            mimeType: 'text/plain'
+        }, { force: true });
+        return this;
+    }
+
+    // Customer Information
+    fillCustomerInfo(name, email, phone = '', notes = '') {
+        cy.get('input[placeholder="Full Name *"]').clear().type(name);
+        cy.get('input[placeholder="Email *"]').clear().type(email);
+        if (phone) {
+            cy.get('input[placeholder="Phone Number"]').clear().type(phone);
+        }
+        if (notes) {
+            cy.get('textarea[placeholder="Additional Notes"]').clear().type(notes);
+        }
+        return this;
+    }
+
+    clearCustomerInfo(field) {
+        const selectors = {
+            name: 'input[placeholder="Full Name *"]',
+            email: 'input[placeholder="Email *"]',
+            phone: 'input[placeholder="Phone Number"]',
+            notes: 'textarea[placeholder="Additional Notes"]'
+        };
+        cy.get(selectors[field]).clear();
+        return this;
+    }
+
+    verifyCustomerInfo(field, expectedValue) {
+        const selectors = {
+            name: 'input[placeholder="Full Name *"]',
+            email: 'input[placeholder="Email *"]',
+            phone: 'input[placeholder="Phone Number"]',
+            notes: 'textarea[placeholder="Additional Notes"]'
+        };
+        cy.get(selectors[field]).should('have.value', expectedValue);
         return this;
     }
 
@@ -132,8 +176,10 @@ class DesignDashboardPage extends BasePage {
     mockGLTFExporter() {
         cy.window().then((win) => {
             win.GLTFExporter = class MockGLTFExporter {
-                parse(object, onSuccess) {
-                    onSuccess(new ArrayBuffer(100));
+                parse(object, onSuccess, onError, options) {
+                    if (onSuccess) {
+                        onSuccess(new ArrayBuffer(100));
+                    }
                 }
             };
         });

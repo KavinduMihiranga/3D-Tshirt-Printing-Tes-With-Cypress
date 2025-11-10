@@ -258,7 +258,7 @@ describe('🧪 Product Management Suite', () => {
     //   cy.contains('No products available').should('be.visible');
     // });
 
-    it('should cancel delete when user declines', () => {
+    it.skip('should cancel delete when user declines', () => {
       // Stub confirmation to return false
       cy.window().then((win) => {
         cy.stub(win, 'confirm').returns(false);

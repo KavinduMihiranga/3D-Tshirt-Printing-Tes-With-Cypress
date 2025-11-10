@@ -12,34 +12,6 @@ class CheckoutDataGenerators {
         return { ...baseData, ...overrides };
     }
 
-    generateInvalidFormData() {
-        return {
-            name: '',
-            email: 'invalid-email',
-            phone: '',
-            addressLine1: '',
-            city: '',
-            province: ''
-        };
-    }
-
-    generatePendingDesign(overrides = {}) {
-        const baseDesign = {
-            file: btoa('mock-design-file-content'),
-            preview: 'mock-preview-url',
-            sizes: { XS: 1, M: 2, XL: 1 },
-            totalPrice: 8000
-        };
-        return { ...baseDesign, ...overrides };
-    }
-
-    generateInvalidDesign() {
-        return {
-            file: '[object Object]', // Invalid file data
-            preview: 'test-preview'
-        };
-    }
-
     generateCartItems(count = 2) {
         return Array.from({ length: count }, (_, i) => ({
             id: `item-${i + 1}`,
@@ -50,8 +22,35 @@ class CheckoutDataGenerators {
         }));
     }
 
-    getEmptyCart() {
-        return [];
+    // Add methods for edge cases
+    generateEdgeCaseData() {
+        return {
+            empty: this.generateFormData({
+                name: '',
+                email: '',
+                phone: '',
+                addressLine1: '',
+                addressLine2: '',
+                city: '',
+                province: ''
+            }),
+            longValues: this.generateFormData({
+                name: 'A'.repeat(100),
+                addressLine1: 'B'.repeat(150)
+            }),
+            specialChars: this.generateFormData({
+                name: 'John Doe-Smith Jr.',
+                addressLine1: '123 Main St. #4B'
+            })
+        };
+    }
+
+      getRegularOrderScenario() {
+        return {
+            formData: this.generateFormData({ name: 'Regular Customer' }),
+            cartItems: this.generateCartItems(2),
+            isDesignOrder: false
+        };
     }
 
     getDesignOrderScenario() {
@@ -59,14 +58,6 @@ class CheckoutDataGenerators {
             formData: this.generateFormData(),
             designData: this.generatePendingDesign(),
             isDesignOrder: true
-        };
-    }
-
-    getRegularOrderScenario() {
-        return {
-            formData: this.generateFormData({ name: 'Regular Customer' }),
-            cartItems: this.generateCartItems(2),
-            isDesignOrder: false
         };
     }
 }
