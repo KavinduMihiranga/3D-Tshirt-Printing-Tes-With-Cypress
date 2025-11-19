@@ -6,6 +6,7 @@ class ProductDataGenerators {
             title: 'Test Product Title',
             description: 'Test product description',
             category: 'Test Category',
+            size: 'Medium',
             price: 1000,
             qty: 10,
             status: 'in stock',
@@ -22,8 +23,10 @@ class ProductDataGenerators {
                 name: `Product ${i + 1}`,
                 title: `Product ${i + 1} Title`,
                 category: i % 2 === 0 ? 'Clothing' : 'Accessories',
+                size: i % 3 === 0 ? 'Small' : i % 3 === 1 ? 'Medium' : 'Large',
                 price: (i + 1) * 1000,
-                qty: (i + 1) * 10
+                qty: (i + 1) * 10,
+                status: i % 2 === 0 ? 'in stock' : 'out of stock'
             })
         );
     }
@@ -32,6 +35,7 @@ class ProductDataGenerators {
         return {
             name: 'New Product',
             category: 'Electronics',
+            size: 'Large',
             description: 'New product description',
             price: '2999',
             qty: '50',
@@ -51,7 +55,10 @@ class ProductDataGenerators {
     getUpdateProductData() {
         return {
             name: 'Updated Product',
-            price: '2499'
+            category: 'Updated Category',
+            price: '2499',
+            qty: '25',
+            status: 'out of stock'
         };
     }
 }

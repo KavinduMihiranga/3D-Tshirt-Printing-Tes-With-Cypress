@@ -51,15 +51,4 @@ describe('Announcement Dashboard', () => {
             .verifyNoDataMessage();
     });
 
-    // it('should search announcements', () => {
-    //     AnnouncementApiHelpers.mockGetAnnouncements(testAnnouncements);
-        
-    //     dashboardPage
-    //         .visit()
-    //         .searchAnnouncements('Announcement 1')
-    //         .verifyAnnouncementExists('Announcement 1')
-    //         .verifyAnnouncementNotExists('Announcement 2')
-    //         .clearSearch()
-    //         .verifyAnnouncementExists('Announcement 2');
-    // });
 });

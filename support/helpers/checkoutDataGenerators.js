@@ -1,8 +1,8 @@
 class CheckoutDataGenerators {
     generateFormData(overrides = {}) {
         const baseData = {
-            name: 'John Doe',
-            email: 'john@example.com',
+            name: 'John Alexander Doe',
+            email: 'john.doe@example.com',
             phone: '1234567890',
             addressLine1: '123 Main Street',
             addressLine2: 'Apt 4B',
@@ -18,46 +18,44 @@ class CheckoutDataGenerators {
             name: `Product ${i + 1}`,
             price: 2500 + (i * 500),
             qty: i + 1,
-            size: ['S', 'M', 'L'][i % 3]
+            size: ['S', 'M', 'L'][i % 3],
+            color: ['Red', 'Blue', 'Green'][i % 3],
+            image: `/images/product-${i + 1}.jpg`
         }));
     }
 
-    // Add methods for edge cases
-    generateEdgeCaseData() {
+    // Test data for validation scenarios
+    generateValidationTestData() {
         return {
-            empty: this.generateFormData({
-                name: '',
-                email: '',
-                phone: '',
-                addressLine1: '',
-                addressLine2: '',
-                city: '',
-                province: ''
+            valid: this.generateFormData(),
+            emptyName: this.generateFormData({ name: '' }),
+            invalidEmail: this.generateFormData({ email: 'invalid-email' }),
+            shortPhone: this.generateFormData({ phone: '123' }),
+            emptyAddress: this.generateFormData({ 
+                addressLine1: '', 
+                city: '', 
+                province: '' 
             }),
-            longValues: this.generateFormData({
-                name: 'A'.repeat(100),
-                addressLine1: 'B'.repeat(150)
-            }),
-            specialChars: this.generateFormData({
-                name: 'John Doe-Smith Jr.',
-                addressLine1: '123 Main St. #4B'
+            nameWithNumbers: this.generateFormData({ name: 'John123 Doe' }),
+            nameWithSpecialChars: this.generateFormData({ name: 'John@Doe' }),
+            singleName: this.generateFormData({ name: 'John' }),
+            internationalPhone: this.generateFormData({ phone: '+94 77 123 4567' }),
+            specialCharacters: this.generateFormData({ 
+                name: 'María José Martínez-López',
+                email: 'test+special@example.com'
             })
         };
     }
 
-      getRegularOrderScenario() {
+    generateEdgeCaseData() {
         return {
-            formData: this.generateFormData({ name: 'Regular Customer' }),
-            cartItems: this.generateCartItems(2),
-            isDesignOrder: false
-        };
-    }
-
-    getDesignOrderScenario() {
-        return {
-            formData: this.generateFormData(),
-            designData: this.generatePendingDesign(),
-            isDesignOrder: true
+            minimal: this.generateFormData({
+                addressLine2: '' // Only addressLine2 is optional
+            }),
+            longButValid: this.generateFormData({
+                name: 'John Alexander William Doe-Smith Jr.',
+                addressLine1: '123 Main Street, Building A, Floor 3, Left Wing'
+            })
         };
     }
 }

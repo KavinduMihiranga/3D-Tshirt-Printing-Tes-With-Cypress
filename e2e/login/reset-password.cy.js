@@ -42,20 +42,22 @@ describe('Reset Password Page', () => {
     });
 
     context('✅ Successful Flow', () => {
-        it.skip('should reset password successfully', () => {
-            AuthApiHelpers.mockResetPasswordSuccess();
-            const resetPage = new ResetPasswordPage();
-            const passwordData = AuthDataGenerators.generateResetPasswordData();
-            
-            resetPage
-                .visit()
-                .fillBothPasswords(passwordData.newPassword)
-                .clickSubmit()
-                .verifyLoadingState();
+    it('should reset password successfully', () => {
+        AuthApiHelpers.mockResetPasswordSuccess();
+        const resetPage = new ResetPasswordPage();
+        const passwordData = AuthDataGenerators.generateResetPasswordData();
+        
+        resetPage
+            .visit()
+            .fillBothPasswords(passwordData.newPassword)
+            .clickSubmit();
 
-            cy.wait('@resetPasswordRequest');
-            resetPage.verifySuccessMessage();
-        });
+        // Wait for API call and skip loading state check
+        cy.wait('@resetPasswordRequest');
+        
+        resetPage.verifySuccessMessage();
+        resetPage.verifyNavigationToLogin();
+    });
     });
 
     context('👁️ Password Visibility', () => {

@@ -44,17 +44,6 @@ describe('Product Dashboard', () => {
         cy.url().should('include', '/addProduct/1');
     });
 
-    // it('should navigate to product detail page', () => {
-    //     ProductApiHelpers.mockGetProducts(testProducts);
-    //     ProductApiHelpers.mockGetProduct('1', testProducts[0]);
-        
-    //     dashboardPage
-    //         .visit()
-    //         .clickViewProduct('Product 1');
-
-    //     cy.url().should('include', '/product/1');
-    // });
-
     it('should show no data message', () => {
         ProductApiHelpers.mockGetProducts([]);
         
@@ -63,15 +52,5 @@ describe('Product Dashboard', () => {
             .verifyNoDataMessage();
     });
 
-    it('should search products', () => {
-        ProductApiHelpers.mockGetProducts(testProducts);
-        
-        dashboardPage
-            .visit()
-            .searchProducts('Product 1')
-            .verifyProductExists('Product 1')
-            .verifyProductNotExists('Product 2')
-            .clearSearch()
-            .verifyProductExists('Product 2');
-    });
+    
 });

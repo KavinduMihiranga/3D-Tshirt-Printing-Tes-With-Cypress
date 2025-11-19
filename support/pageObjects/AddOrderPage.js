@@ -1,3 +1,4 @@
+// In AddOrderPage.js - Fixed with import
 import BasePage from './BasePage';
 
 class AddOrderPage extends BasePage {
@@ -41,11 +42,6 @@ class AddOrderPage extends BasePage {
         return this;
     }
 
-    fillStatus(status) {
-        cy.get('input[name="status"]').clear().type(status);
-        return this;
-    }
-
     submit() {
         cy.get('form').submit();
         return this;
@@ -67,7 +63,6 @@ class AddOrderPage extends BasePage {
         if (orderData.address) this.fillAddress(orderData.address);
         if (orderData.qty) this.fillQuantity(orderData.qty);
         if (orderData.date) this.fillDate(orderData.date);
-        if (orderData.status) this.fillStatus(orderData.status);
         return this;
     }
 
@@ -77,7 +72,6 @@ class AddOrderPage extends BasePage {
         cy.get('input[name="address"]').should('be.visible');
         cy.get('input[name="qty"]').should('be.visible');
         cy.get('input[name="date"]').should('be.visible');
-        cy.get('input[name="status"]').should('be.visible');
         return this;
     }
 }

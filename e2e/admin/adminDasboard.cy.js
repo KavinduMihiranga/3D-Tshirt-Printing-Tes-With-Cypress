@@ -125,14 +125,22 @@ describe('Admin Dashboard Tests', () => {
       dashboardPage.verifyUrl('/addAdmin');
     });
 
-    // it('should navigate to edit admin page', () => {
-    //   const admin = testData.validAdmins[0];
-    //   AdminApiHelpers.mockGetAdmins([admin]);
-    //   AdminApiHelpers.waitForApi('getAdmins');
+    it('should navigate to edit admin page', () => {
+      const admin = testData.validAdmins[0];
+  
+      // Mock the GET admin by ID endpoint with proper authentication
+      AdminApiHelpers.mockGetAdminById(admin._id, admin, 'getAdminById');
+      AdminApiHelpers.mockGetAdmins([admin]);
+      
+      // Wait for initial admins load
+      AdminApiHelpers.waitForApi('getAdmins');
 
-    //   dashboardPage.clickEditAdmin(admin.username);
-    //   dashboardPage.verifyUrl(`/addAdmin/${admin._id}`);
-    // });
+      dashboardPage.clickEditAdmin(admin.username);
+      
+      // Wait for the admin details API call and verify URL
+      AdminApiHelpers.waitForApi('getAdminById');
+      dashboardPage.verifyUrl(`/addAdmin/${admin._id}`);
+    });
 
     it('should navigate to admin detail page when clicking username', () => {
       const admin = testData.validAdmins[0];

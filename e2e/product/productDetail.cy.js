@@ -33,16 +33,6 @@ describe('Product Detail', () => {
             .verifyProductImage();
     });
 
-    // it('should handle product not found', () => {
-    //     const invalidId = '999';
-    //     const invalidPage = new ProductDetailPage(invalidId);
-        
-    //     ProductApiHelpers.mockError('GET', `**/api/product/${invalidId}**`, 404);
-    //     invalidPage.visit();
-        
-    //     cy.contains('Product not found').should('be.visible');
-    // });
-
     it('should add product to cart', () => {
         detailPage.clickAddToCart();
         cy.url().should('include', '/cart');

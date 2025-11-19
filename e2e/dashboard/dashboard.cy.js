@@ -13,6 +13,7 @@ describe('Dashboard Main Page', () => {
     context('🎯 Page Structure & Content', () => {
         it('should load dashboard successfully', () => {
             dashboardPage.verifyPageLoaded();
+            cy.contains('Custom Designs, Premium Quality').should('be.visible');
         });
 
         it('should display products grid layout', () => {
@@ -26,10 +27,6 @@ describe('Dashboard Main Page', () => {
         it('should display product images correctly', () => {
             dashboardPage.verifyProductImages();
         });
-
-        // it('should display pagination controls', () => {
-        //     dashboardPage.verifyPagination();
-        // });
     });
 
     context('🔄 User Interactions', () => {
@@ -346,7 +343,7 @@ describe('Error Boundary Tests', () => {
             dashboardPage.visit();
             
             cy.get('body').click('topLeft');
-            cy.get('body').rightclick();
+            cy.get('body').rightclick({ force: true });
             cy.get('body').should('be.visible');
         });
 

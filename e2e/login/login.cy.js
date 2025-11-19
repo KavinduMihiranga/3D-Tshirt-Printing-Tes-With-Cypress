@@ -23,18 +23,6 @@ describe('Login Page', () => {
                 .clickFillSampleCredentials()
                 .verifySampleCredentialsFilled();
         });
-
-        // it('should show/hide password', () => {
-        //     const testPassword = 'testpassword';
-            
-        //     loginPage
-        //         .fillPassword(testPassword)
-        //         .verifyPasswordHidden()
-        //         .togglePasswordVisibility()
-        //         .verifyPasswordVisible()
-        //         .togglePasswordVisibility()
-        //         .verifyPasswordHidden();
-        // });
     });
 
     context('🚨 Error Handling', () => {

@@ -33,8 +33,7 @@ class OrderDataGenerators {
             tShirtName: 'New T-Shirt',
             address: '789 Pine Rd, Village, State',
             qty: '2',
-            date: '2024-01-20',
-            status: 'Pending'
+            date: '2024-01-20'
         };
     }
 
@@ -42,7 +41,9 @@ class OrderDataGenerators {
         return {
             customerName: '',
             tShirtName: '',
-            qty: '-1'
+            address: '',
+            qty: '0',
+            date: ''
         };
     }
 

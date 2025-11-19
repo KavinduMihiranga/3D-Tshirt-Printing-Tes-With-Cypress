@@ -55,6 +55,25 @@ class CheckoutApiHelpers {
         }).as(alias);
         return this;
     }
+
+    mockEmptyCartError(alias = 'emptyCartError') {
+        cy.intercept('POST', `${this.baseUrl}/order`, {
+            statusCode: 400,
+            body: { message: 'Cart cannot be empty' }
+        }).as(alias);
+        return this;
+    }
+
+    mockPaymentSuccess(alias = 'paymentSuccess') {
+        cy.intercept('POST', `${this.baseUrl}/payment`, {
+            statusCode: 200,
+            body: { 
+                success: true, 
+                data: { _id: 'payment-123', status: 'completed' } 
+            }
+        }).as(alias);
+        return this;
+    }
 }
 
 export default new CheckoutApiHelpers();

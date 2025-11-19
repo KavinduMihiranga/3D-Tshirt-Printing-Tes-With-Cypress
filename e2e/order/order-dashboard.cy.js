@@ -68,18 +68,6 @@ describe('Order Dashboard', () => {
         dashboardPage.verifyNoDataMessage();
     });
 
-    // it('should search orders', () => {
-    //     OrderApiHelpers.mockGetOrders(testOrders);
-    //     dashboardPage.visit();
-        
-    //     dashboardPage
-    //         .searchOrders('Customer 1')
-    //         .verifyOrderExists('Customer 1')
-    //         .verifyOrderNotExists('Customer 2')
-    //         .clearSearch()
-    //         .verifyOrderExists('Customer 2');
-    // });
-
     it('should change rows per page', () => {
         OrderApiHelpers.mockGetOrders([]);
         dashboardPage.visit();

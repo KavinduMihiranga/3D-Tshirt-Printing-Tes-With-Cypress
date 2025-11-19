@@ -5,7 +5,9 @@ class CheckoutPage {
     }
 
     verifyPageLoaded() {
+        cy.get('body').should('be.visible');
         cy.contains('h1', 'Checkout Page').should('be.visible');
+        cy.wait(1000);
         return this;
     }
 
@@ -19,11 +21,11 @@ class CheckoutPage {
     }
 
     verifyRequiredFields() {
-        cy.get('input[placeholder="Enter your name"]').should('exist');
+        cy.get('input[placeholder="Enter your full name (first and last name)"]').should('exist');
         cy.get('input[placeholder="Enter your email"]').should('exist');
         cy.get('input[placeholder="Enter your phone number"]').should('exist');
-        cy.get('input[placeholder="Enter your addressLine1"]').should('exist');
-        cy.get('input[placeholder="Enter your addressLine2"]').should('exist');
+        cy.get('input[placeholder="Enter your address line1"]').should('exist');
+        cy.get('input[placeholder="Enter your address line2"]').should('exist');
         cy.get('input[placeholder="Enter your city"]').should('exist');
         cy.get('input[placeholder="Enter your province"]').should('exist');
         return this;
@@ -31,8 +33,21 @@ class CheckoutPage {
 
     verifySubmitButton() {
         cy.get('button[type="submit"]')
-            .should('contain', 'Continue')
-            .and('be.enabled');
+            .should('contain', 'Continue to Payment');
+        return this;
+    }
+
+    verifySubmitButtonEnabled() {
+        cy.get('button[type="submit"]')
+            .should('not.be.disabled')
+            .and('not.have.class', 'bg-gray-400');
+        return this;
+    }
+
+    verifySubmitButtonDisabled() {
+        cy.get('button[type="submit"]')
+            .should('be.disabled')
+            .and('have.class', 'bg-gray-400');
         return this;
     }
 
@@ -52,17 +67,82 @@ class CheckoutPage {
     }
 
     fillPersonalInfo(name, email, phone) {
-        cy.get('input[placeholder="Enter your name"]').clear().type(name);
-        cy.get('input[placeholder="Enter your email"]').clear().type(email);
-        cy.get('input[placeholder="Enter your phone number"]').clear().type(phone);
+        if (name) {
+            cy.get('input[placeholder="Enter your full name (first and last name)"]')
+                .clear()
+                .type(name);
+        }
+        if (email) {
+            cy.get('input[placeholder="Enter your email"]')
+                .clear()
+                .type(email);
+        }
+        if (phone) {
+            cy.get('input[placeholder="Enter your phone number"]')
+                .clear()
+                .type(phone);
+        }
         return this;
     }
 
     fillBillingAddress(addressLine1, addressLine2, city, province) {
-        cy.get('input[placeholder="Enter your addressLine1"]').clear().type(addressLine1);
-        cy.get('input[placeholder="Enter your addressLine2"]').clear().type(addressLine2);
-        cy.get('input[placeholder="Enter your city"]').clear().type(city);
-        cy.get('input[placeholder="Enter your province"]').clear().type(province);
+        if (addressLine1) {
+            cy.get('input[placeholder="Enter your address line1"]')
+                .clear()
+                .type(addressLine1);
+        }
+        
+        if (addressLine2) {
+            cy.get('input[placeholder="Enter your address line2"]')
+                .clear()
+                .type(addressLine2);
+        }
+        
+        if (city) {
+            cy.get('input[placeholder="Enter your city"]')
+                .clear()
+                .type(city);
+        }
+        
+        if (province) {
+            cy.get('input[placeholder="Enter your province"]')
+                .clear()
+                .type(province);
+        }
+        return this;
+    }
+
+    fillShippingAddress(addressLine1, addressLine2, city, province) {
+        // First uncheck the same address checkbox
+        this.toggleSameAddressCheckbox();
+        
+        if (addressLine1) {
+            cy.get('input[placeholder="Enter your address line1"]')
+                .eq(1) // Second address line1 input (shipping)
+                .clear()
+                .type(addressLine1);
+        }
+        
+        if (addressLine2) {
+            cy.get('input[placeholder="Enter your address line2"]')
+                .eq(1) // Second address line2 input (shipping)
+                .clear()
+                .type(addressLine2);
+        }
+        
+        if (city) {
+            cy.get('input[placeholder="Enter your city"]')
+                .eq(1) // Second city input (shipping)
+                .clear()
+                .type(city);
+        }
+        
+        if (province) {
+            cy.get('input[placeholder="Enter your province"]')
+                .eq(1) // Second province input (shipping)
+                .clear()
+                .type(province);
+        }
         return this;
     }
 
@@ -73,7 +153,7 @@ class CheckoutPage {
     }
 
     submitForm() {
-        cy.get('button[type="submit"]').click();
+        cy.get('button[type="submit"]').click({ force: true });
         return this;
     }
 
@@ -98,29 +178,43 @@ class CheckoutPage {
         return this;
     }
 
-    // Add to your CheckoutPage class
-fillBillingAddressRequiredOnly(addressLine1, city, province) {
-    cy.get('input[placeholder="Enter your addressLine1"]').clear().type(addressLine1);
-    cy.get('input[placeholder="Enter your city"]').clear().type(city);
-    cy.get('input[placeholder="Enter your province"]').clear().type(province);
-    // Completely skip the optional addressLine2 field
-    return this;
-}
-
-// Update the existing fillBillingAddress method to handle empty strings properly
-fillBillingAddress(addressLine1, addressLine2, city, province) {
-    cy.get('input[placeholder="Enter your addressLine1"]').clear().type(addressLine1);
-    
-    // Only interact with addressLine2 if it has a value
-    if (addressLine2 && addressLine2.trim() !== '') {
-        cy.get('input[placeholder="Enter your addressLine2"]').clear().type(addressLine2);
+    verifyValidationError(field, expectedError) {
+        cy.contains('.text-red-500', expectedError).should('be.visible');
+        return this;
     }
-    // If addressLine2 is empty, don't touch the field at all
-    
-    cy.get('input[placeholder="Enter your city"]').clear().type(city);
-    cy.get('input[placeholder="Enter your province"]').clear().type(province);
-    return this;
-}
+
+    verifyValidationSuccess(field) {
+        cy.contains('.text-green-500', 'looks good!').should('be.visible');
+        return this;
+    }
+
+    verifyNoValidationErrors() {
+        cy.get('.text-red-500').should('not.exist');
+        return this;
+    }
+
+    // Debug method
+    debugFormState() {
+        cy.log('=== FORM DEBUG INFO ===');
+        cy.get('input').each(($input, index) => {
+            const placeholder = $input.attr('placeholder');
+            const value = $input.val();
+            const disabled = $input.is(':disabled');
+            cy.log(`Input ${index}: placeholder="${placeholder}", value="${value}", disabled=${disabled}`);
+        });
+        
+        cy.get('button[type="submit"]').then(($btn) => {
+            cy.log(`Submit button: disabled=${$btn.is(':disabled')}, text="${$btn.text()}"`);
+        });
+        return this;
+    }
+
+    // Wait for form to be ready
+    waitForFormReady() {
+        cy.get('form').should('exist');
+        cy.get('input[placeholder="Enter your full name (first and last name)"]').should('be.visible');
+        return this;
+    }
 }
 
 export default CheckoutPage;

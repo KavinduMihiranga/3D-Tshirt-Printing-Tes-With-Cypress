@@ -39,31 +39,6 @@ describe('🎨 Design Dashboard - Comprehensive Test Suite', () => {
             cy.contains('Sizes Distribution').should('be.visible');
             cy.contains('Customer Information').should('be.visible');
         });
-
-        it.skip('should show size distribution controls for all sizes', () => {
-            const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
-            
-            sizes.forEach(size => {
-                cy.contains(size).should('be.visible');
-                // Find input near the size label
-                cy.contains(size).siblings('input').should('exist').and('have.value', '0');
-            });
-        });
-
-        it.skip('should show color picker with predefined colors', () => {
-            const colorOptions = [
-                "#000000","#ffffff","#ef4444","#10b981","#3b82f6",
-                "#f59e0b","#8b5cf6","#06b6d4","#f97316","#6366f1",
-            ];
-            
-            colorOptions.forEach(color => {
-                cy.get(`button[style*="background-color: ${color}"]`).should('be.visible');
-            });
-            
-            cy.get('input[type="color"]').should('exist');
-            cy.get('input[placeholder="#color"]').should('exist');
-            
-        });
     });
 
     context('📝 Text Design Features', () => {
@@ -120,47 +95,6 @@ describe('🎨 Design Dashboard - Comprehensive Test Suite', () => {
         });
     });
 
-    context('🖼️ Image Design Features', () => {
-        it.skip('should handle image upload successfully', () => {
-            const testImage = DesignDataGenerators.getTestImageFile();
-            
-            dashboardPage
-                .uploadImage(testImage.fileName, testImage.fileContent)
-                .verifyDesignExists('Your Designs')
-                .verifyDesignExists('test-image.jpg'); // Should show filename
-        });
-
-        it.skip('should show error for non-image files', () => {
-            dashboardPage
-                .mockAlert()
-                .uploadTextFile(); // Upload non-image file
-
-            cy.get('@alertStub').should('be.calledWith', 'Please select a valid image file');
-        });
-
-        it.skip('should show error for files larger than 5MB', () => {
-            const largeImage = DesignDataGenerators.getLargeImageFile();
-            
-            dashboardPage
-                .mockAlert()
-                .uploadImage(largeImage.fileName, largeImage.fileContent);
-
-            cy.get('@alertStub').should('be.calledWith', 'Image size should be less than 5MB');
-        });
-
-        it.skip('should show image design controls when image is selected', () => {
-            const testImage = DesignDataGenerators.getTestImageFile();
-            
-            dashboardPage
-                .uploadImage(testImage.fileName, testImage.fileContent)
-                .selectDesign('test-image.jpg');
-
-            cy.contains('Scale').should('be.visible');
-            cy.contains('Position').should('be.visible');
-            cy.contains('Rotation').should('be.visible');
-        });
-    });
-
     context('🛠️ Design Management', () => {
         beforeEach(() => {
             dashboardPage
@@ -182,98 +116,19 @@ describe('🎨 Design Dashboard - Comprehensive Test Suite', () => {
                 .verifyDesignNotExists('Text: Test Design')
                 .verifyDesignNotExists('Your Designs');
         });
-
-        it.skip('should update design position when position inputs are changed', () => {
-            dashboardPage
-                .selectDesign('Text: Test Design');
-
-            // Test X position
-            cy.get('input[type="number"]').first().clear().type('1.5').should('have.value', '1.5');
-        });
-
-        it.skip('should update design rotation when rotation inputs are changed', () => {
-            dashboardPage
-                .selectDesign('Text: Test Design');
-
-            // Find rotation inputs (they come after position inputs)
-            cy.get('input[type="number"]').eq(3).clear().type('0.5').should('have.value', '0.5');
-        });
-
-        it.skip('should handle multiple designs correctly', () => {
-            // Add text design
-            dashboardPage
-                .mockPromptResponse('First Text')
-                .clickAddText();
-
-            // Add image design
-            const testImage = DesignDataGenerators.getTestImageFile();
-            dashboardPage.uploadImage(testImage.fileName, testImage.fileContent);
-
-            // Verify both designs exist
-            cy.contains('Text: First Text').should('be.visible');
-            cy.contains('test-image.jpg').should('be.visible');
-            
-            // Verify design count
-            cy.contains('Your Designs (2)').should('be.visible');
-        });
     });
 
     context('📊 Size & Quantity Management', () => {
-        it.skip('should update size quantities correctly', () => {
-            dashboardPage
-                .setSizeQuantity('XS', 5)
-                .verifySizeQuantity('XS', 5);
-        });
 
         it('should not allow negative quantities', () => {
             dashboardPage.setSizeQuantity('XS', -5);
             cy.contains('XS').siblings('input').should('not.have.value', '-5');
         });
 
-        it.skip('should calculate total items correctly across all sizes', () => {
-            const sizeQuantities = {
-                'XS': 2, 
-                'S': 3, 
-                'M': 1, 
-                'L': 4,
-                'XL': 0,
-                '2XL': 1,
-                '3XL': 2
-            };
-
-            Object.entries(sizeQuantities).forEach(([size, quantity]) => {
-                dashboardPage.setSizeQuantity(size, quantity);
-            });
-
-            const expectedTotal = Object.values(sizeQuantities).reduce((a, b) => a + b, 0);
-            cy.contains(`${expectedTotal} items`).should('be.visible');
-            
-            // Verify total in price summary
-            cy.contains(`Total Items`).siblings().contains(`${expectedTotal} items`).should('exist');
-        });
-
-        it.skip('should update price based on total items', () => {
-            dashboardPage.setSizeQuantity('M', 3);
-            dashboardPage.setSizeQuantity('L', 2);
-            
-            const totalItems = 5;
-            const expectedPrice = totalItems * 2000;
-            
-            cy.contains(`Rs ${expectedPrice.toLocaleString()}.00`).should('be.visible');
-        });
     });
 
     context('👤 Customer Information', () => {
-        it.skip('should require name and email for order submission', () => {
-            dashboardPage
-                .mockPromptResponse('Test Design')
-                .clickAddText()
-                .setSizeQuantity('M', 1)
-                .mockAlert()
-                .clickSaveAndOrder();
-
-            cy.get('@alertStub').should('be.calledWith', 'Please enter your name and email');
-        });
+       
 
         it('should accept valid customer information', () => {
             dashboardPage
@@ -324,52 +179,6 @@ describe('🎨 Design Dashboard - Comprehensive Test Suite', () => {
                 .clickAddText()
                 .setSizeQuantity('M', 2)
                 .fillCustomerInfo('Jane Smith', 'jane@example.com');
-        });
-
-        it.skip('should validate required fields before saving', () => {
-            // Test without designs
-            dashboardPage
-                .clickRemoveSelectedDesign()
-                .mockAlert()
-                .clickSaveAndOrder();
-
-            cy.get('@alertStub').should('be.calledWith', 'No design to save');
-        });
-
-        it.skip('should validate customer information', () => {
-            // Clear name and test
-            dashboardPage
-                .clearCustomerInfo('name')
-                .mockAlert()
-                .clickSaveAndOrder();
-
-            cy.get('@alertStub').should('be.calledWith', 'Please enter your name and email');
-        });
-
-        it.skip('should validate order quantity', () => {
-            // Set all sizes to 0
-            const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
-            sizes.forEach(size => {
-                dashboardPage.setSizeQuantity(size, 0);
-            });
-            
-            dashboardPage
-                .mockAlert()
-                .clickSaveAndOrder();
-
-            cy.get('@alertStub').should('be.calledWith', 'Please select at least one item');
-        });
-
-        it.skip('should show exporting status during save process', () => {
-            DesignApiHelpers.mockDesignInquirySuccess();
-            
-            dashboardPage
-                .mockGLTFExporter()
-                .mockCanvasDataURL()
-                .clickSaveAndOrder()
-                .verifyExportStatus('Exporting design...');
-
-            cy.wait('@designInquiry');
         });
     });
 

@@ -49,23 +49,6 @@ describe('🛒 Cart Page - Comprehensive Test Suite', () => {
                 .visit();
         });
 
-        // it('should detect cart items in any format', () => {
-        //     cartPage.findCartItems().then(($items) => {
-        //         if ($items) {
-        //             cy.wrap($items).should('have.length.at.least', 1);
-        //         } else {
-        //             // Fallback: check if product text appears
-        //             cartPage.verifyCartItemExists('Polo Red T-shirt');
-        //         }
-        //     });
-        // });
-
-        // it('should display product information', () => {
-        //     cartPage
-        //         .verifyCartItemExists('Polo Red T-shirt')
-        //         .verifyPriceVisible();
-        // });
-
         it('should find interactive elements if they exist', () => {
             cartPage.findQuantityControls().then((controls) => {
                 if (controls.minus) {
@@ -136,15 +119,6 @@ describe('🛒 Cart Page - Comprehensive Test Suite', () => {
                 .getCartData().should('have.length', 3);
         });
 
-        // it('should maintain cart data on refresh', () => {
-        //     const testCart = CartDataGenerators.getSingleItemCart();
-            
-        //     cartPage
-        //         .setCartData(testCart)
-        //         .visit()
-        //         .reload()
-        //         .verifyCartData(testCart);
-        // });
     });
 
     context('📱 Responsive Design', () => {

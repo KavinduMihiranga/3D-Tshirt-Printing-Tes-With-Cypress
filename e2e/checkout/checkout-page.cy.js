@@ -1,237 +1,407 @@
 import CheckoutPage from '../../support/pageObjects/CheckoutPage';
-import CheckoutApiHelpers from '../../support/helpers/checkoutApiHelpers';
 import CheckoutDataGenerators from '../../support/helpers/checkoutDataGenerators';
 
-describe('🧾 Checkout Page - Comprehensive Test Suite', () => {
-    const checkoutPage = new CheckoutPage();
+describe('🧾 Checkout Page', () => {
+  const checkoutPage = new CheckoutPage();
 
-    context('🎯 UI Structure & Layout', () => {
-        beforeEach(() => {
-            checkoutPage.visit();
-        });
-
-        it('should load checkout page with correct title', () => {
-            checkoutPage.verifyPageLoaded();
-        });
-
-        it('should display all form sections', () => {
-            checkoutPage.verifyFormSections();
-        });
-
-        it('should have all required form fields', () => {
-            checkoutPage.verifyRequiredFields();
-        });
-
-        it('should have submit button with correct text', () => {
-            checkoutPage.verifySubmitButton();
-        });
-    });
-
-    context('📝 Form Validation & Error Handling', () => {
-        beforeEach(() => {
-            checkoutPage
-                .visit()
-                .mockAlert();
-        });
-
-        // it('should show validation errors for empty required fields - IMPLEMENTED', () => {
-        //     // Submit form without filling any fields
-        //     checkoutPage.submitForm();
-            
-        //     // Your component shows alert for empty required fields
-        //     cy.get('@alertStub').should('be.calledWith', 'Please fill in all required fields before continuing.');
-        // });
-
-        // it('should validate email format - NOT IMPLEMENTED', () => {
-        //     // Email format validation is not implemented in current component
-        //     const formData = CheckoutDataGenerators.generateFormData({ email: 'invalid-email' });
-            
-        //     checkoutPage
-        //         .fillForm(formData)
-        //         .submitForm();
-
-        //     // Since email validation is not implemented, it should still navigate
-        //     cy.url().should('include', '/payment');
-        // });
-    });
-
-    context('🏠 Address Management', () => {
-        beforeEach(() => {
-            checkoutPage.visit();
-        });
-
-        it('should have same address checkbox checked by default', () => {
-            checkoutPage.verifySameAddressChecked();
-        });
-
-        it('should copy billing address to shipping when checkbox is checked - IMPLEMENTED', () => {
-            const billingData = {
-                addressLine1: '123 Test Street',
-                addressLine2: 'Apt 5C',
-                city: 'Colombo',
-                province: 'Western Province'
-            };
-            
-            checkoutPage
-                .fillBillingAddress(
-                    billingData.addressLine1,
-                    billingData.addressLine2,
-                    billingData.city,
-                    billingData.province
-                )
-                .verifySameAddressChecked();
-
-            // Test that form can be submitted successfully with same address
-            checkoutPage
-                .fillPersonalInfo('Test User', 'test@example.com', '1234567890')
-                .submitForm();
-
-            cy.url().should('include', '/payment');
-        });
-
-        it('should allow separate shipping address when unchecked - PARTIALLY IMPLEMENTED', () => {
-            // Note: Shipping address fields are dynamically rendered but not as separate indexed inputs
-            checkoutPage
-                .mockAlert()
-                .fillPersonalInfo('Test User', 'test@example.com', '1234567890')
-                .fillBillingAddress('123 Billing St', 'Apt 1', 'Colombo', 'Western')
-                .toggleSameAddressCheckbox()
-                .verifySameAddressUnchecked();
-
-            // Shipping address fields should now be visible but implementation differs
-            // The test shows that UI changes but actual separate address handling needs verification
-            cy.contains('h2', 'Shipping Address').should('be.visible');
-            
-            // Fill shipping address using the actual implementation
-            cy.get('input[placeholder="Enter your addressLine1"]').then(($inputs) => {
-                if ($inputs.length > 1) {
-                    // If multiple address inputs exist (unlikely in current implementation)
-                    cy.wrap($inputs[1]).type('456 Shipping St');
-                } else {
-                    // Current implementation - shipping fields appear but are separate
-                    cy.log('Shipping address implementation differs from test expectations');
-                }
-            });
-        });
-    });
-
-    context('🛒 Regular Order Flow', () => {
-        beforeEach(() => {
-            checkoutPage
-                .clearPendingDesign()
-                .setCartItems(CheckoutDataGenerators.generateCartItems(2))
-                .visit();
-        });
-
-        it('should navigate to payment page with correct data - IMPLEMENTED', () => {
-            const formData = CheckoutDataGenerators.generateFormData();
-            
-            checkoutPage
-                .fillForm(formData)
-                .submitForm();
-
-            cy.url().should('include', '/payment');
-        });
-
-        it('should handle regular order without design data - IMPLEMENTED', () => {
-            checkoutPage
-                .clearPendingDesign()
-                .visit()
-                .verifyPageLoaded()
-                .fillForm(CheckoutDataGenerators.generateFormData())
-                .submitForm();
-
-            cy.url().should('include', '/payment');
-        });
-    });
-
-    context('⏳ Form Submission States', () => {
-        it('should handle form submission correctly - IMPLEMENTED', () => {
-            checkoutPage
-                .visit()
-                .fillForm(CheckoutDataGenerators.generateFormData())
-                .submitForm();
-
-            // Should navigate to payment
-            cy.url().should('include', '/payment');
-        });
-
-        // it('should prevent submission with empty required fields - IMPLEMENTED', () => {
-        //     checkoutPage
-        //         .visit()
-        //         .mockAlert()
-        //         .submitForm();
-
-        //     cy.get('@alertStub').should('be.calledWith', 'Please fill in all required fields before continuing.');
-        //     cy.url().should('not.include', '/payment'); // Should not navigate
-        // });
-    });
-
-    context('🔧 Technical Scenarios', () => {
-        it('should handle large form data - IMPLEMENTED', () => {
-            const longData = {
-                name: 'A'.repeat(50), // Reduced length to be realistic
-                email: 'test@example.com',
-                phone: '1'.repeat(15), // Realistic phone length
-                addressLine1: 'B'.repeat(50),
-                addressLine2: 'C'.repeat(50),
-                city: 'D'.repeat(30),
-                province: 'E'.repeat(30)
-            };
-
-            checkoutPage
-                .visit()
-                .fillForm(longData)
-                .submitForm();
-
-            cy.url().should('include', '/payment');
-        });
-
-        // it('should maintain form state on browser back - NOT IMPLEMENTED', () => {
-        //     // Form state persistence on browser back is not implemented
-        //     const formData = CheckoutDataGenerators.generateFormData();
-            
-        //     checkoutPage
-        //         .visit()
-        //         .fillPersonalInfo(formData.name, formData.email, formData.phone)
-        //         .submitForm();
-
-        //     cy.url().should('include', '/payment');
-            
-        //     // Go back - form state persistence is browser-dependent and not implemented
-        //     cy.go('back');
-            
-        //     // Form data may or may not be preserved (browser behavior)
-        //     checkoutPage.verifyPageLoaded();
-        //     cy.log('Form state persistence on browser back is not implemented in component');
-        // });
-    });
-
-    context('🔄 Edge Cases', () => {
-        it('should handle special characters in form data - IMPLEMENTED', () => {
-            const specialCharData = {
-                name: 'John Doe-Smith Jr.',
-                email: 'test+special@example.com',
-                phone: '+1 (555) 123-4567',
-                addressLine1: '123 Main St. #4B',
-                addressLine2: 'Apt 5-C',
-                city: 'San José',
-                province: 'Québec'
-            };
-
-            checkoutPage
-                .visit()
-                .fillForm(specialCharData)
-                .submitForm();
-
-            cy.url().should('include', '/payment');
-        });
-
-        it('should handle form resubmission - NOT TESTED', () => {
-            // Multiple submissions handling is not specifically implemented
-            cy.log('Form resubmission handling not specifically implemented in component');
-        });
-    });
-
+  beforeEach(() => {
+    cy.clearLocalStorage();
+    checkoutPage.clearPendingDesign();
     
+    // Handle uncaught exceptions
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      if (err.message.includes('WebAssembly') || err.message.includes('Out of memory')) {
+        return false;
+      }
+      if (err.message.includes('ResizeObserver') || err.message.includes('Request failed')) {
+        return false;
+      }
+      return true;
+    });
+  });
+
+  describe('📄 Page Structure', () => {
+    beforeEach(() => {
+      checkoutPage.visit();
+    });
+
+    it('should load the checkout page successfully', () => {
+      checkoutPage.verifyPageLoaded();
+    });
+
+    it('should display the correct page title', () => {
+      cy.contains('h1', 'Checkout Page').should('be.visible');
+    });
+
+    it('should display all form sections', () => {
+      checkoutPage.verifyFormSections();
+    });
+
+    it('should have all required form fields visible', () => {
+      checkoutPage.verifyRequiredFields();
+    });
+
+    it('should have submit button with correct text', () => {
+      checkoutPage.verifySubmitButton();
+    });
+
+    it('should have submit button disabled initially', () => {
+      checkoutPage.verifySubmitButtonDisabled();
+    });
+  });
+
+  describe('✅ Form Validation', () => {
+    beforeEach(() => {
+      checkoutPage
+        .visit()
+        .mockAlert();
+    });
+
+   
+
+    it('should show error for invalid email format', () => {
+      checkoutPage
+        .fillPersonalInfo('John Doe', 'invalid-email', '1234567890')
+        .submitForm();
+
+      cy.contains('.text-red-500', 'Please enter a valid email address').should('be.visible');
+    });
+
+    it('should show error for short phone number', () => {
+      checkoutPage
+        .fillPersonalInfo('John Doe', 'test@example.com', '123')
+        .submitForm();
+
+      cy.contains('.text-red-500', 'Phone number must be at least 10 digits').should('be.visible');
+    });
+
+
+    it('should show success message for valid name', () => {
+      checkoutPage
+        .fillPersonalInfo('John Doe', '', '')
+        .fillBillingAddress('123 Main St', '', 'Colombo', 'Western');
+
+      cy.contains('.text-green-500', 'Name looks good!').should('be.visible');
+    });
+
+    it('should reject names containing numbers', () => {
+      checkoutPage
+        .fillPersonalInfo('John123 Doe', 'test@example.com', '1234567890')
+        .submitForm();
+
+      cy.contains('.text-red-500', 'Name cannot contain numbers').should('be.visible');
+    });
+
+    it('should reject names containing special characters', () => {
+      checkoutPage
+        .fillPersonalInfo('John@Doe', 'test@example.com', '1234567890')
+        .submitForm();
+
+      cy.contains('.text-red-500', 'Name cannot contain special characters').should('be.visible');
+    });
+
+    it('should require both first and last name', () => {
+      checkoutPage
+        .fillPersonalInfo('John', 'test@example.com', '1234567890')
+        .submitForm();
+
+      cy.contains('.text-red-500', 'Please enter your full name (first and last name)').should('be.visible');
+    });
+
+   
+  });
+
+  describe('🏠 Address Management', () => {
+    beforeEach(() => {
+      checkoutPage.visit();
+    });
+
+    it('should have same address checkbox checked by default', () => {
+      checkoutPage.verifySameAddressChecked();
+    });
+
+    it('should show "Same as billing address" when checkbox is checked', () => {
+      cy.contains('p', 'Same as billing address').should('be.visible');
+    });
+
+    it('should show shipping address fields when checkbox is unchecked', () => {
+      checkoutPage.toggleSameAddressCheckbox();
+
+      checkoutPage.verifySameAddressUnchecked();
+      cy.get('input[placeholder="Enter your address line1"]').should('have.length', 2);
+      cy.get('input[placeholder="Enter your city"]').should('have.length', 2);
+    });
+
+    it('should allow filling separate shipping address', () => {
+      const billingData = {
+        addressLine1: '123 Billing St',
+        addressLine2: 'Apt 1',
+        city: 'Colombo',
+        province: 'Western'
+      };
+
+      const shippingData = {
+        addressLine1: '456 Shipping St',
+        addressLine2: 'Suite 200',
+        city: 'Kandy',
+        province: 'Central'
+      };
+
+      checkoutPage
+        .fillPersonalInfo('Test User', 'test@example.com', '1234567890')
+        .fillBillingAddress(
+          billingData.addressLine1,
+          billingData.addressLine2,
+          billingData.city,
+          billingData.province
+        )
+        .fillShippingAddress(
+          shippingData.addressLine1,
+          shippingData.addressLine2,
+          shippingData.city,
+          shippingData.province
+        )
+        .verifySubmitButtonEnabled();
+    });
+
+  });
+
+  describe('🛒 Order Processing', () => {
+    beforeEach(() => {
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(2))
+        .visit();
+    });
+
+    it('should enable submit button when all required fields are filled', () => {
+      const formData = CheckoutDataGenerators.generateFormData();
+      
+      checkoutPage
+        .fillPersonalInfo(formData.name, formData.email, formData.phone)
+        .verifySubmitButtonDisabled()
+        .fillBillingAddress(formData.addressLine1, formData.addressLine2, formData.city, formData.province)
+        .verifySubmitButtonEnabled();
+    });
+
+    it('should navigate to payment page with valid form data', () => {
+      const formData = CheckoutDataGenerators.generateFormData();
+      
+      checkoutPage
+        .fillForm(formData)
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+
+    it('should handle order with multiple cart items', () => {
+      const multipleItems = CheckoutDataGenerators.generateCartItems(5);
+      const formData = CheckoutDataGenerators.generateFormData();
+
+      checkoutPage
+        .setCartItems(multipleItems)
+        .visit()
+        .fillForm(formData)
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+
+    it('should handle order with only required fields', () => {
+      const minimalData = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        phone: '1234567890',
+        addressLine1: '123 Main St',
+        city: 'Colombo',
+        province: 'Western'
+      };
+
+      checkoutPage
+        .fillPersonalInfo(minimalData.name, minimalData.email, minimalData.phone)
+        .fillBillingAddress(minimalData.addressLine1, '', minimalData.city, minimalData.province)
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+  });
+
+  describe('🌍 International & Special Cases', () => {
+    beforeEach(() => {
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit();
+    });
+
+    it('should accept international phone numbers', () => {
+      const internationalData = {
+        name: 'John Doe',
+        email: 'test@example.com',
+        phone: '+94 77 123 4567',
+        addressLine1: '123 Main St',
+        city: 'Colombo',
+        province: 'Western'
+      };
+
+      checkoutPage
+        .fillForm(internationalData)
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+
+    it('should accept email with plus addressing', () => {
+      const plusEmailData = {
+        name: 'John Doe',
+        email: 'test+special@example.com',
+        phone: '1234567890',
+        addressLine1: '123 Main St',
+        city: 'Colombo',
+        province: 'Western'
+      };
+
+      checkoutPage
+        .fillForm(plusEmailData)
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+  });
+
+  describe('📱 Responsive Behavior', () => {
+    it('should work correctly on mobile viewport', () => {
+      cy.viewport('iphone-6');
+      
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit()
+        .verifyPageLoaded()
+        .fillForm(CheckoutDataGenerators.generateFormData())
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+
+    it('should work correctly on tablet viewport', () => {
+      cy.viewport('ipad-2');
+      
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit()
+        .verifyPageLoaded()
+        .fillForm(CheckoutDataGenerators.generateFormData())
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+
+    it('should maintain form state after page reload', () => {
+      const formData = CheckoutDataGenerators.generateFormData();
+      
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit()
+        .fillPersonalInfo(formData.name, formData.email, formData.phone)
+        .fillBillingAddress(formData.addressLine1, formData.addressLine2, formData.city, formData.province);
+
+      cy.reload();
+      
+      checkoutPage
+        .verifyPageLoaded()
+        .fillPersonalInfo(formData.name, formData.email, formData.phone)
+        .fillBillingAddress(formData.addressLine1, formData.addressLine2, formData.city, formData.province)
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+
+    it('should work after browser navigation', () => {
+      const formData = CheckoutDataGenerators.generateFormData();
+      
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit()
+        .verifyPageLoaded();
+
+      cy.visit('/');
+      cy.go('back');
+      
+      checkoutPage
+        .verifyPageLoaded()
+        .fillForm(formData)
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+  });
+
+  describe('⚡ Performance & Edge Cases', () => {
+    it('should handle rapid form filling', () => {
+      const formData = CheckoutDataGenerators.generateFormData();
+      
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit();
+
+      // Rapid sequential typing
+      cy.get('input[placeholder="Enter your full name (first and last name)"]').type(formData.name);
+      cy.get('input[placeholder="Enter your email"]').type(formData.email);
+      cy.get('input[placeholder="Enter your phone number"]').type(formData.phone);
+      cy.get('input[placeholder="Enter your address line1"]').type(formData.addressLine1);
+      cy.get('input[placeholder="Enter your address line2"]').type(formData.addressLine2);
+      cy.get('input[placeholder="Enter your city"]').type(formData.city);
+      cy.get('input[placeholder="Enter your province"]').type(formData.province);
+
+      checkoutPage
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+
+    it('should handle concurrent form interactions', () => {
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit();
+
+      // Simulate user interacting with multiple fields and checkbox
+      cy.get('input[placeholder="Enter your full name (first and last name)"]').type('John Doe');
+      cy.get('input[placeholder="Enter your email"]').type('test@example.com');
+      cy.get('input[type="checkbox"]').click(); // Toggle while filling
+      cy.get('input[placeholder="Enter your phone number"]').type('1234567890');
+      cy.get('input[type="checkbox"]').click(); // Toggle back
+      cy.get('input[placeholder="Enter your address line1"]').type('123 Main St');
+      cy.get('input[placeholder="Enter your city"]').type('Colombo');
+      cy.get('input[placeholder="Enter your province"]').type('Western');
+
+      checkoutPage
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+  });
+
+  describe('🎯 Specific Business Rules', () => {
+
+    it('should handle mixed case in email', () => {
+      checkoutPage
+        .setCartItems(CheckoutDataGenerators.generateCartItems(1))
+        .visit()
+        .fillPersonalInfo('John Doe', 'Test.User@Example.COM', '1234567890')
+        .fillBillingAddress('123 Main St', '', 'Colombo', 'Western')
+        .verifySubmitButtonEnabled()
+        .submitForm();
+
+      cy.url().should('include', '/payment');
+    });
+  });
 });

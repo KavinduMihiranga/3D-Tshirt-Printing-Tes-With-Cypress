@@ -31,19 +31,6 @@ describe('🔄 Cart Page - Integration Tests', () => {
     });
 
     context('⚡ Performance & Reliability', () => {
-        // it('should load quickly with cart data', () => {
-        //     const startTime = Date.now();
-            
-        //     cartPage
-        //         .setCartData(CartDataGenerators.getMultipleItemsCart())
-        //         .visit()
-        //         .verifyPageLoaded()
-        //         .then(() => {
-        //             const loadTime = Date.now() - startTime;
-        //             cy.log(`Cart page loaded in ${loadTime}ms`);
-        //             expect(loadTime).to.be.lessThan(5000);
-        //         });
-        // });
 
         it('should handle large cart data', () => {
             const largeCart = CartDataGenerators.generateMultipleCartItems(20);

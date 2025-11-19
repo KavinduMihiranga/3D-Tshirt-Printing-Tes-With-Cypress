@@ -26,6 +26,11 @@ class AddProductPage extends BasePage {
         return this;
     }
 
+    fillSize(size) {
+        cy.get('select[name="size"]').select(size);
+        return this;
+    }
+
     fillDescription(description) {
         cy.get('textarea[name="description"]').clear().type(description);
         return this;
@@ -42,7 +47,16 @@ class AddProductPage extends BasePage {
     }
 
     fillStatus(status) {
-        cy.get('input[name="status"]').clear().type(status);
+        cy.get('select[name="status"]').select(status);
+        return this;
+    }
+
+    uploadImage(fileName = 'test-image.jpg') {
+        cy.get('input[type="file"]').selectFile({
+            contents: Cypress.Buffer.from('file contents'),
+            fileName: fileName,
+            lastModified: Date.now(),
+        }, { force: true });
         return this;
     }
 
@@ -51,13 +65,37 @@ class AddProductPage extends BasePage {
         return this;
     }
 
+    clickCancel() {
+        cy.contains('button', 'Cancel').click();
+        return this;
+    }
+
     fillForm(productData) {
         if (productData.name) this.fillName(productData.name);
         if (productData.category) this.fillCategory(productData.category);
+        if (productData.size) this.fillSize(productData.size);
         if (productData.description) this.fillDescription(productData.description);
         if (productData.price) this.fillPrice(productData.price);
         if (productData.qty) this.fillQuantity(productData.qty);
         if (productData.status) this.fillStatus(productData.status);
+        return this;
+    }
+
+    verifyFormFields() {
+        cy.get('input[name="name"]').should('be.visible');
+        cy.get('input[name="category"]').should('be.visible');
+        cy.get('select[name="size"]').should('be.visible');
+        cy.get('textarea[name="description"]').should('be.visible');
+        cy.get('input[name="price"]').should('be.visible');
+        cy.get('input[name="qty"]').should('be.visible');
+        cy.get('select[name="status"]').should('be.visible');
+        cy.get('input[type="file"]').should('be.visible');
+        cy.get('button[type="submit"]').should('be.visible');
+        return this;
+    }
+
+    verifyImagePreview() {
+        cy.get('img').should('be.visible');
         return this;
     }
 }
