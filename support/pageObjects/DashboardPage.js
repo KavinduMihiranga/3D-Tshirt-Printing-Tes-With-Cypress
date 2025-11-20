@@ -60,10 +60,20 @@ class DashboardPage extends BasePage {
         return this;
     }
 
-    navigateToProductPage() {
-        cy.get('a[href="/productPage"]').click();
-        return this;
-    }
+   navigateToProductPage() {
+    // Target only the desktop menu item (visible on larger screens)
+    cy.get('nav').should('be.visible').then(($nav) => {
+        if ($nav.find('.hidden.md\\:flex a[href="/productPage"]').length > 0) {
+            // Desktop menu is visible
+            cy.get('.hidden.md\\:flex a[href="/productPage"]').first().click();
+        } else {
+            // Mobile menu is visible, open it first if needed
+            cy.get('button.md\\:hidden').click();
+            cy.get('a[href="/productPage"]').filter(':visible').first().click();
+        }
+    });
+    return this;
+}
 
     navigateToDesignPage() {
         cy.get('a[href="/design"]').click();
@@ -71,19 +81,23 @@ class DashboardPage extends BasePage {
     }
 
     navigateToAboutPage() {
-        cy.get('a[href="/aboutUs"]').click();
-        return this;
-    }
+    cy.get('.hidden.md\\:flex a[href="/aboutUs"]').first().click();
+    return this;
+}
+   navigateToContactPage() {
+    cy.get('.hidden.md\\:flex a[href="/contactUs"]').first().click();
+    return this;
+}
 
-    navigateToContactPage() {
-        cy.get('a[href="/contactUs"]').click();
-        return this;
-    }
+navigateToCartPage() {
+    cy.get('.hidden.md\\:flex a[href="/cartPage"]').first().click();
+    return this;
+}
 
-    navigateToHome() {
-        cy.get('a[href="/"]').first().click();
-        return this;
-    }
+   navigateToHome() {
+    cy.get('a[href="/"]').first().click();
+    return this;
+}
 
     verifyNavigationSuccess(page) {
         cy.url({ timeout: 10000 }).should('include', page);

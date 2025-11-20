@@ -285,10 +285,10 @@ describe('Cart and Checkout Tests', () => {
 
     context('🛒 Shopping Flow', () => {
         it('should navigate to cart page', () => {
-            dashboardPage.visit();
-            cy.get('a[href="/cartPage"]').click();
-            cy.url().should('include', '/cartPage');
-            cy.get('body').should('be.visible');
+            dashboardPage
+                .visit()
+                .navigateToCartPage()  // Use the page object method instead of direct cy.get()
+                .verifyNavigationSuccess('/cartPage');
         });
     });
 });
