@@ -1,0 +1,151 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:03:51.795Z",
+    "end": "2025-11-21T09:03:54.703Z",
+    "duration": 2908,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "f0d94bb8-a0ed-4fa0-875e-c636113af009",
+      "title": "",
+      "fullFile": "cypress/e2e/cart/cart-debug.cy.js",
+      "file": "cypress/e2e/cart/cart-debug.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4b3c4008-b31f-4529-ab8c-5c7f59418cd7",
+          "title": "🔍 Cart Page - Debug & Discovery",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should reveal actual cart page structure",
+              "fullTitle": "🔍 Cart Page - Debug & Discovery should reveal actual cart page structure",
+              "timedOut": null,
+              "duration": 1586,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cartPage.setCartData(_cartDataGenerators.default.getSingleItemCart()).visit().debugPageStructure();",
+              "err": {},
+              "uuid": "a074c44b-414d-44b1-bb8a-13f5664e6dd8",
+              "parentUUID": "4b3c4008-b31f-4529-ab8c-5c7f59418cd7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should test all possible cart item selectors",
+              "fullTitle": "🔍 Cart Page - Debug & Discovery should test all possible cart item selectors",
+              "timedOut": null,
+              "duration": 530,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cartPage.setCartData(_cartDataGenerators.default.getMultipleItemsCart()).visit();\n// Test each selector pattern\nconst selectors = ['table tbody tr', '.cart-item', '.item', '.product', '[class*=\"cart\"]', '.row', '.flex > div', '.grid > div'];\nselectors.forEach(selector => {\n  cy.get('body').then($body => {\n    const elements = $body.find(selector);\n    if (elements.length > 0) {\n      cy.log(`✅ Found ${elements.length} elements with: ${selector}`);\n      cy.get(selector).should('exist');\n    }\n  });\n});",
+              "err": {},
+              "uuid": "4e948ca1-f3ad-4590-b99d-c81b482fdf8d",
+              "parentUUID": "4b3c4008-b31f-4529-ab8c-5c7f59418cd7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should identify all interactive elements",
+              "fullTitle": "🔍 Cart Page - Debug & Discovery should identify all interactive elements",
+              "timedOut": null,
+              "duration": 413,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cartPage.setCartData(_cartDataGenerators.default.getSingleItemCart()).visit();\ncy.get('body').then($body => {\n  // Find all buttons and their purposes\n  const buttons = $body.find('button');\n  cy.log(`Total buttons found: ${buttons.length}`);\n  buttons.each((index, btn) => {\n    var _btn$textContent;\n    const text = (_btn$textContent = btn.textContent) === null || _btn$textContent === void 0 ? void 0 : _btn$textContent.trim();\n    const classes = btn.className;\n    cy.log(`Button ${index}: \"${text}\" - classes: ${classes}`);\n  });\n  // Find all inputs\n  const inputs = $body.find('input');\n  cy.log(`Total inputs found: ${inputs.length}`);\n  inputs.each((index, input) => {\n    const type = input.type;\n    const placeholder = input.placeholder;\n    cy.log(`Input ${index}: type=${type}, placeholder=${placeholder}`);\n  });\n});",
+              "err": {},
+              "uuid": "38a3c5c7-e44a-402d-b24d-77fc396870da",
+              "parentUUID": "4b3c4008-b31f-4529-ab8c-5c7f59418cd7",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a074c44b-414d-44b1-bb8a-13f5664e6dd8",
+            "4e948ca1-f3ad-4590-b99d-c81b482fdf8d",
+            "38a3c5c7-e44a-402d-b24d-77fc396870da"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2529,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

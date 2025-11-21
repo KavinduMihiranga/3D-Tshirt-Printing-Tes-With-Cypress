@@ -1,0 +1,307 @@
+{
+  "stats": {
+    "suites": 6,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:10:04.678Z",
+    "end": "2025-11-21T09:10:30.524Z",
+    "duration": 25846,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "9fe63f57-bc48-4453-bc6c-ecf40d811071",
+      "title": "",
+      "fullFile": "cypress/e2e/customer/customerIntegration.cy.js",
+      "file": "cypress/e2e/customer/customerIntegration.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "ad725fcb-93ce-4b8d-ab38-9e6254fcc2ce",
+          "title": "Customer Management Integration Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "e1ca616e-8891-45d6-853e-e3a9f5bea2a1",
+              "title": "Complete Customer Lifecycle",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should create, read, update, and delete a customer",
+                  "fullTitle": "Customer Management Integration Tests Complete Customer Lifecycle should create, read, update, and delete a customer",
+                  "timedOut": null,
+                  "duration": 11262,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// Step 1: Start with empty list\n_apiHelpers.default.mockGetCustomers([], 'getEmptyCustomers');\n_apiHelpers.default.waitForApi('getEmptyCustomers');\ndashboardPage.verifyNoDataMessage();\n// Step 2: Navigate to Add Customer\ndashboardPage.clickAddNewCustomer();\ndashboardPage.verifyUrl('/addCustomer');\naddCustomerPage.verifyAddFormElements();\n// Step 3: Create new customer - Setup mock BEFORE submitting\nconst newCustomer = _dataGenerators.default.generateFormData();\nconst createdCustomer = _dataGenerators.default.generateCustomer(_objectSpread(_objectSpread({}, newCustomer), {}, {\n  _id: '123'\n}));\n_apiHelpers.default.mockCreateCustomer(apiResponses.success.create, 'createCustomer');\naddCustomerPage.fillCustomerForm(newCustomer);\naddCustomerPage.submitForm();\n_apiHelpers.default.waitForApi('createCustomer');\n// Step 4: Navigate back to dashboard and verify customer appears\ncy.visit('/customerDashboard', {\n  onBeforeLoad(win) {\n    win.localStorage.setItem('adminToken', 'mock-admin-token-for-testing');\n  }\n});\n_apiHelpers.default.mockGetCustomers([createdCustomer], 'getCustomersAfterCreate');\n_apiHelpers.default.waitForApi('getCustomersAfterCreate');\ndashboardPage.verifyCustomerExists(createdCustomer.name);\n// Step 5: Navigate to Edit - Setup mock BEFORE clicking edit\n_apiHelpers.default.mockGetCustomerById(createdCustomer._id, createdCustomer, 'getCustomerForEdit');\ndashboardPage.clickEditCustomer(createdCustomer.name);\n_apiHelpers.default.waitForApi('getCustomerForEdit');\ndashboardPage.verifyUrl(`/addCustomer/${createdCustomer._id}`);\naddCustomerPage.verifyEditFormElements();\n// Step 6: Update customer - Setup mock BEFORE submitting\nconst updatedData = {\n  name: 'Updated Customer Name'\n};\nconst updatedCustomer = _objectSpread(_objectSpread({}, createdCustomer), updatedData);\n_apiHelpers.default.mockUpdateCustomer(createdCustomer._id, apiResponses.success.update, 'updateCustomer');\naddCustomerPage.fillField('name', updatedData.name);\naddCustomerPage.updateForm();\n_apiHelpers.default.waitForApi('updateCustomer');\n// Step 7: Navigate back and verify update\ncy.visit('/customerDashboard', {\n  onBeforeLoad(win) {\n    win.localStorage.setItem('adminToken', 'mock-admin-token-for-testing');\n  }\n});\n_apiHelpers.default.mockGetCustomers([updatedCustomer], 'getCustomersAfterUpdate');\n_apiHelpers.default.waitForApi('getCustomersAfterUpdate');\ndashboardPage.verifyCustomerExists(updatedData.name);\n// Step 8: Delete customer - Setup ALL mocks BEFORE clicking delete\n_apiHelpers.default.mockDeleteCustomer(createdCustomer._id, 'deleteCustomer');\n_apiHelpers.default.mockGetCustomers([], 'getCustomersAfterDelete');\ncy.window().then(win => {\n  cy.stub(win, 'confirm').returns(true);\n});\ndashboardPage.clickDeleteCustomer(updatedData.name);\n_apiHelpers.default.waitForApi('deleteCustomer');\n_apiHelpers.default.waitForApi('getCustomersAfterDelete');\n// Step 9: Verify deletion\ndashboardPage.verifyCustomerNotExists(updatedData.name);\ndashboardPage.verifyNoDataMessage();",
+                  "err": {},
+                  "uuid": "08871519-aa36-41b7-aaba-96f6ad18a104",
+                  "parentUUID": "e1ca616e-8891-45d6-853e-e3a9f5bea2a1",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "08871519-aa36-41b7-aaba-96f6ad18a104"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 11262,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "4014b826-99b9-4dd0-8efc-d0dc31737542",
+              "title": "Form Validation Flow",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should handle form validation errors",
+                  "fullTitle": "Customer Management Integration Tests Form Validation Flow should handle form validation errors",
+                  "timedOut": null,
+                  "duration": 2450,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_apiHelpers.default.mockGetCustomers([]);\n_apiHelpers.default.waitForApi('getCustomers');\ndashboardPage.clickAddNewCustomer();\naddCustomerPage.verifyAddFormElements();\n// Try to submit empty form\naddCustomerPage.submitForm();\n// Wait a moment for any validation to show\ncy.wait(500);\n// Should stay on form page (browser validation prevents submission)\ndashboardPage.verifyUrl('/addCustomer');",
+                  "err": {},
+                  "uuid": "2a9628b2-10e9-4827-bdee-1dc45be1bc80",
+                  "parentUUID": "4014b826-99b9-4dd0-8efc-d0dc31737542",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "should handle API validation errors",
+                  "fullTitle": "Customer Management Integration Tests Form Validation Flow should handle API validation errors",
+                  "timedOut": null,
+                  "duration": 6037,
+                  "state": "passed",
+                  "speed": "medium",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_apiHelpers.default.mockGetCustomers([]);\n_apiHelpers.default.waitForApi('getCustomers');\ndashboardPage.clickAddNewCustomer();\nconst invalidCustomer = _dataGenerators.default.generateInvalidCustomer('email');\n// Setup mock BEFORE submitting\n_apiHelpers.default.mockValidationError('POST', 'customer', 'validationError');\naddCustomerPage.fillCustomerForm(invalidCustomer);\naddCustomerPage.submitForm();\n// Only wait if the form actually tries to submit\n// If browser validation blocks it, this won't fire\ncy.wait(500);\n// Should stay on form\ndashboardPage.verifyUrl('/addCustomer');",
+                  "err": {},
+                  "uuid": "4a558655-654c-48c7-82bb-15965130d6c7",
+                  "parentUUID": "4014b826-99b9-4dd0-8efc-d0dc31737542",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "2a9628b2-10e9-4827-bdee-1dc45be1bc80",
+                "4a558655-654c-48c7-82bb-15965130d6c7"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 8487,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "dd8bf9ed-e160-4246-a2ca-830f36271182",
+              "title": "Multi-Customer Operations",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should handle multiple customers with pagination",
+                  "fullTitle": "Customer Management Integration Tests Multi-Customer Operations should handle multiple customers with pagination",
+                  "timedOut": null,
+                  "duration": 757,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const customers = _dataGenerators.default.generateMultipleCustomers(15);\n_apiHelpers.default.mockGetCustomers(customers);\n_apiHelpers.default.waitForApi('getCustomers');\n// Verify first page customers (first 10)\ncustomers.slice(0, 10).forEach(customer => {\n  dashboardPage.verifyCustomerExists(customer.name);\n});\n// Navigate to page 2\ndashboardPage.clickPaginationPage(2);\ndashboardPage.verifyPaginationActive(2);",
+                  "err": {},
+                  "uuid": "ffbb7724-5172-4a0f-9493-b07780207c3f",
+                  "parentUUID": "dd8bf9ed-e160-4246-a2ca-830f36271182",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "ffbb7724-5172-4a0f-9493-b07780207c3f"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 757,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "df2062d5-8d5a-4bb8-b9b1-26c12317caa6",
+              "title": "Error Recovery Flow",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should recover from failed operations",
+                  "fullTitle": "Customer Management Integration Tests Error Recovery Flow should recover from failed operations",
+                  "timedOut": null,
+                  "duration": 815,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const customer = _dataGenerators.default.generateCustomer();\n_apiHelpers.default.mockGetCustomers([customer]);\n_apiHelpers.default.waitForApi('getCustomers');\n// Attempt delete with error - Setup mocks BEFORE action\n_apiHelpers.default.mockServerError('DELETE', `customer/${customer._id}`, 'deleteError');\ncy.window().then(win => {\n  cy.stub(win, 'confirm').returns(true);\n  cy.stub(win, 'alert').as('alertStub');\n});\ndashboardPage.clickDeleteCustomer(customer.name);\n_apiHelpers.default.waitForApi('deleteError');\n// Should show error and customer still exists\ncy.get('@alertStub').should('be.calledWith', 'Failed to delete customer.');\ndashboardPage.verifyCustomerExists(customer.name);\n// Retry with success - IMPORTANT: Setup mocks BEFORE second delete attempt\n_apiHelpers.default.mockDeleteCustomer(customer._id, 'deleteSuccess');\n_apiHelpers.default.mockGetCustomers([], 'getAfterSuccess');\n// NOTE: Don't stub again - use the existing stub\ndashboardPage.clickDeleteCustomer(customer.name);\n_apiHelpers.default.waitForApi('deleteSuccess');\n_apiHelpers.default.waitForApi('getAfterSuccess');\n// Should be deleted now\ndashboardPage.verifyCustomerNotExists(customer.name);",
+                  "err": {},
+                  "uuid": "d1b1ade5-f2f5-4e32-ae03-ca716cebe57c",
+                  "parentUUID": "df2062d5-8d5a-4bb8-b9b1-26c12317caa6",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "d1b1ade5-f2f5-4e32-ae03-ca716cebe57c"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 815,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "28b4179a-6789-480d-ac43-6e63d5c4b413",
+              "title": "Concurrent Operations",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should handle rapid navigation between pages",
+                  "fullTitle": "Customer Management Integration Tests Concurrent Operations should handle rapid navigation between pages",
+                  "timedOut": null,
+                  "duration": 3952,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_apiHelpers.default.mockGetCustomers([]);\n_apiHelpers.default.waitForApi('getCustomers');\n// Navigate to add page\ndashboardPage.clickAddNewCustomer();\ndashboardPage.verifyUrl('/addCustomer');\n// Navigate back\naddCustomerPage.clickCancel();\n// Wait for navigation\ncy.wait(500);\n// Should be back (URL won't include addCustomer)\ncy.url().should('not.include', '/addCustomer');\n// Setup mock for dashboard again\n_apiHelpers.default.mockGetCustomers([]);\n// Navigate again\ncy.visit('/customerDashboard', {\n  onBeforeLoad(win) {\n    win.localStorage.setItem('adminToken', 'mock-admin-token-for-testing');\n  }\n});\n_apiHelpers.default.waitForApi('getCustomers');\ndashboardPage.clickAddNewCustomer();\ndashboardPage.verifyUrl('/addCustomer');\n// Close\naddCustomerPage.clickClose();\ncy.wait(500);\ncy.url().should('not.include', '/addCustomer');",
+                  "err": {},
+                  "uuid": "cc94a453-9c3c-4bb1-a950-31521c4046e3",
+                  "parentUUID": "28b4179a-6789-480d-ac43-6e63d5c4b413",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "cc94a453-9c3c-4bb1-a950-31521c4046e3"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 3952,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

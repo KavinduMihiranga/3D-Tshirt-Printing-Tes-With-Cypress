@@ -1,0 +1,307 @@
+{
+  "stats": {
+    "suites": 6,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:11:59.264Z",
+    "end": "2025-11-21T09:12:06.989Z",
+    "duration": 7725,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "0c3feb17-844a-4dd7-b9bc-d912eac9add8",
+      "title": "",
+      "fullFile": "cypress/e2e/login/login.cy.js",
+      "file": "cypress/e2e/login/login.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "bad9a908-3164-4da2-b5cb-1d4c29a2f979",
+          "title": "Login Page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "f135362c-8598-4d0d-a3ba-ccb90dcf00f8",
+              "title": "🎯 UI Structure & Layout",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should display login form",
+                  "fullTitle": "Login Page 🎯 UI Structure & Layout should display login form",
+                  "timedOut": null,
+                  "duration": 1621,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "loginPage.verifyPageLoaded().verifyFormElements();",
+                  "err": {},
+                  "uuid": "95fb009d-2f03-4649-981c-6ae899daaa14",
+                  "parentUUID": "f135362c-8598-4d0d-a3ba-ccb90dcf00f8",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "95fb009d-2f03-4649-981c-6ae899daaa14"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 1621,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "47f94e11-ef93-4a9e-9c0e-2586862eb222",
+              "title": "🔄 Form Interactions",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should fill sample credentials",
+                  "fullTitle": "Login Page 🔄 Form Interactions should fill sample credentials",
+                  "timedOut": null,
+                  "duration": 703,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "loginPage.clickFillSampleCredentials().verifySampleCredentialsFilled();",
+                  "err": {},
+                  "uuid": "b33376a7-5eac-4fc7-a770-c4c0ab2defa7",
+                  "parentUUID": "47f94e11-ef93-4a9e-9c0e-2586862eb222",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "b33376a7-5eac-4fc7-a770-c4c0ab2defa7"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 703,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "96087ef4-e0c5-435b-8bf9-51d4bfb085b3",
+              "title": "🚨 Error Handling",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should show error with invalid credentials",
+                  "fullTitle": "Login Page 🚨 Error Handling should show error with invalid credentials",
+                  "timedOut": null,
+                  "duration": 1515,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_AuthApiHelpers.default.mockLoginError();\nconst invalidData = _AuthDataGenerators.default.generateInvalidLoginData();\nloginPage.fillEmail(invalidData.email).fillPassword(invalidData.password).clickSubmit().verifyErrorMessage('Invalid credentials');\ncy.wait('@loginError');",
+                  "err": {},
+                  "uuid": "5a45827c-a5e1-4d72-bce6-064bb022a4ae",
+                  "parentUUID": "96087ef4-e0c5-435b-8bf9-51d4bfb085b3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "should handle network errors",
+                  "fullTitle": "Login Page 🚨 Error Handling should handle network errors",
+                  "timedOut": null,
+                  "duration": 1291,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_AuthApiHelpers.default.mockNetworkError('login');\nloginPage.fillEmail('test@example.com').fillPassword('password').clickSubmit();\n// Should handle error gracefully\ncy.get('body').should('exist');",
+                  "err": {},
+                  "uuid": "4e596a9b-05df-4a18-873f-e90c80093d84",
+                  "parentUUID": "96087ef4-e0c5-435b-8bf9-51d4bfb085b3",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "5a45827c-a5e1-4d72-bce6-064bb022a4ae",
+                "4e596a9b-05df-4a18-873f-e90c80093d84"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 2806,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "b87cb62f-260e-4f0a-98ba-a91c47263c1a",
+              "title": "🔗 Navigation",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should navigate to forgot password",
+                  "fullTitle": "Login Page 🔗 Navigation should navigate to forgot password",
+                  "timedOut": null,
+                  "duration": 852,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "loginPage.clickForgotPassword().verifyNavigationToForgotPassword();",
+                  "err": {},
+                  "uuid": "c9518e16-aa29-4c24-8576-1fb71171291c",
+                  "parentUUID": "b87cb62f-260e-4f0a-98ba-a91c47263c1a",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "c9518e16-aa29-4c24-8576-1fb71171291c"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 852,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "40ed33c0-6926-4700-afa9-e1a6d6b91482",
+              "title": "✅ Successful Login",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should login successfully with valid credentials",
+                  "fullTitle": "Login Page ✅ Successful Login should login successfully with valid credentials",
+                  "timedOut": null,
+                  "duration": 1367,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_AuthApiHelpers.default.mockLoginSuccess();\nconst validData = _AuthDataGenerators.default.generateLoginData();\nloginPage.fillEmail(validData.email).fillPassword(validData.password).clickSubmit();\ncy.wait('@loginRequest');\n// Should redirect to admin dashboard or home page\ncy.url().should('not.include', '/login');",
+                  "err": {},
+                  "uuid": "eeffd6ea-a840-4298-bec2-62329827bf8e",
+                  "parentUUID": "40ed33c0-6926-4700-afa9-e1a6d6b91482",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "eeffd6ea-a840-4298-bec2-62329827bf8e"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 1367,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

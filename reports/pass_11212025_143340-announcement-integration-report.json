@@ -1,0 +1,113 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:03:36.235Z",
+    "end": "2025-11-21T09:03:40.374Z",
+    "duration": 4139,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "46951d2a-b2ff-4e36-9d25-fe2cc52e5ecd",
+      "title": "",
+      "fullFile": "cypress/e2e/announcement/announcement-integration.cy.js",
+      "file": "cypress/e2e/announcement/announcement-integration.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9fbd0fff-9ae9-44fc-9ef5-433b52678265",
+          "title": "Announcement Management Integration",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should complete full CRUD workflow",
+              "fullTitle": "Announcement Management Integration should complete full CRUD workflow",
+              "timedOut": null,
+              "duration": 4046,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const newAnnouncement = _announcementDataGenerators.default.getValidAnnouncementData();\n// Start with empty dashboard\n_announcementApiHelpers.default.mockGetAnnouncements([]);\ndashboardPage.visit();\ndashboardPage.verifyNoDataMessage();\n// Add new announcement\n_announcementApiHelpers.default.mockCreateAnnouncement({\n  message: 'Announcement created successfully',\n  data: {\n    _id: 'new-123'\n  }\n});\ndashboardPage.clickAddNewAnnouncement();\naddPage.fillForm(newAnnouncement.title, newAnnouncement.content).submit();\ncy.wait('@createAnnouncement');\n// Verify announcement appears in list\nconst createdAnnouncement = _announcementDataGenerators.default.generateAnnouncement({\n  _id: 'new-123',\n  title: newAnnouncement.title,\n  content: newAnnouncement.content\n});\n_announcementApiHelpers.default.mockGetAnnouncements([createdAnnouncement]);\ncy.reload();\ndashboardPage.verifyAnnouncementExists(newAnnouncement.title);",
+              "err": {},
+              "uuid": "a9e01c66-d7bd-494b-b975-a3e987378ec9",
+              "parentUUID": "9fbd0fff-9ae9-44fc-9ef5-433b52678265",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a9e01c66-d7bd-494b-b975-a3e987378ec9"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4046,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

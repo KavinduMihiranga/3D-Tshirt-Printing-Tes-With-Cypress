@@ -1,0 +1,170 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:03:29.736Z",
+    "end": "2025-11-21T09:03:33.614Z",
+    "duration": 3878,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "0f16cb09-e137-4551-8f07-01f642a8807d",
+      "title": "",
+      "fullFile": "cypress/e2e/announcement/announcement-dashboard.cy.js",
+      "file": "cypress/e2e/announcement/announcement-dashboard.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "3a2e3274-6f44-4fbf-ad3a-eb444e9467d9",
+          "title": "Announcement Dashboard",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display dashboard with announcements",
+              "fullTitle": "Announcement Dashboard should display dashboard with announcements",
+              "timedOut": null,
+              "duration": 1760,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockGetAnnouncements(testAnnouncements);\ndashboardPage.visit().verifyPageLoaded().verifyAnnouncementExists('Announcement 1').verifyAnnouncementExists('Announcement 2');\ncy.contains('Announcement Management').should('be.visible');\ncy.contains('Add New Announcement').should('be.visible');",
+              "err": {},
+              "uuid": "041d062f-a2ef-45ff-ac36-9cddf91c4a50",
+              "parentUUID": "3a2e3274-6f44-4fbf-ad3a-eb444e9467d9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to add announcement page",
+              "fullTitle": "Announcement Dashboard should navigate to add announcement page",
+              "timedOut": null,
+              "duration": 753,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockGetAnnouncements([]);\ndashboardPage.visit().clickAddNewAnnouncement();\ncy.url().should('include', '/addAnnouncement');",
+              "err": {},
+              "uuid": "147d0da2-41e7-445a-af40-a5941385d16a",
+              "parentUUID": "3a2e3274-6f44-4fbf-ad3a-eb444e9467d9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to edit announcement page",
+              "fullTitle": "Announcement Dashboard should navigate to edit announcement page",
+              "timedOut": null,
+              "duration": 651,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockGetAnnouncements(testAnnouncements);\ndashboardPage.visit().clickEditAnnouncement('Announcement 1');\ncy.url().should('include', '/editAnnouncements/1');",
+              "err": {},
+              "uuid": "0f2c8d75-9c04-48b8-9240-4931a7cdd60f",
+              "parentUUID": "3a2e3274-6f44-4fbf-ad3a-eb444e9467d9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show no data message",
+              "fullTitle": "Announcement Dashboard should show no data message",
+              "timedOut": null,
+              "duration": 516,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockGetAnnouncements([]);\ndashboardPage.visit().verifyNoDataMessage();",
+              "err": {},
+              "uuid": "52652e05-1363-4ec3-af8b-646ae45f6630",
+              "parentUUID": "3a2e3274-6f44-4fbf-ad3a-eb444e9467d9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "041d062f-a2ef-45ff-ac36-9cddf91c4a50",
+            "147d0da2-41e7-445a-af40-a5941385d16a",
+            "0f2c8d75-9c04-48b8-9240-4931a7cdd60f",
+            "52652e05-1363-4ec3-af8b-646ae45f6630"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 3680,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

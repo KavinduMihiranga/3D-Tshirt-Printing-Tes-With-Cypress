@@ -1,0 +1,113 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:13:34.449Z",
+    "end": "2025-11-21T09:13:42.859Z",
+    "duration": 8410,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "63612af1-f24e-4d20-a0d1-b43856996a14",
+      "title": "",
+      "fullFile": "cypress/e2e/product/debug-detail.cy.js",
+      "file": "cypress/e2e/product/debug-detail.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a4255953-e775-41a1-b652-3b5d3beacf5f",
+          "title": "Product Detail Debug",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should debug what happens on product detail page",
+              "fullTitle": "Product Detail Debug should debug what happens on product detail page",
+              "timedOut": null,
+              "duration": 8356,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const productId = '123';\n// Log all network requests\ncy.intercept('*', req => {\n  console.log('🔍 NETWORK:', req.method, req.url);\n  req.continue();\n});\n// Set auth\ncy.window().then(win => {\n  win.localStorage.setItem('adminToken', 'test-token-123');\n});\nconsole.log('🚀 Visiting product detail page...');\ncy.visit(`/product/${productId}`);\n// Wait and check what's displayed\ncy.wait(5000);\ncy.get('body').then($body => {\n  console.log('📄 PAGE CONTENT:');\n  console.log('Title:', $body.find('h1, h2').text());\n  console.log('Product name exists:', $body.text().includes('T-shirt') || $body.text().includes('Product'));\n  console.log('Price exists:', $body.text().includes('Rs.') || $body.text().includes('$'));\n  console.log('Add to Cart button exists:', $body.find('button:contains(\"Add to Cart\")').length > 0);\n  // Log all text content for analysis\n  console.log('Full page text:', $body.text().substring(0, 500) + '...');\n});",
+              "err": {},
+              "uuid": "a0c39277-3fdf-447e-977c-b9254ec988d4",
+              "parentUUID": "a4255953-e775-41a1-b652-3b5d3beacf5f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a0c39277-3fdf-447e-977c-b9254ec988d4"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 8356,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

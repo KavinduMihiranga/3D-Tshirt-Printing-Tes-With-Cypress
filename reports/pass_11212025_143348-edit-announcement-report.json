@@ -1,0 +1,170 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:03:43.207Z",
+    "end": "2025-11-21T09:03:48.886Z",
+    "duration": 5679,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "2c7de537-74e5-435d-9e5c-462add79bd67",
+      "title": "",
+      "fullFile": "cypress/e2e/announcement/edit-announcement.cy.js",
+      "file": "cypress/e2e/announcement/edit-announcement.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "fe17edb9-fd69-4f28-bd9a-73f50d7c28b9",
+          "title": "Edit Announcement",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display form with existing data",
+              "fullTitle": "Edit Announcement should display form with existing data",
+              "timedOut": null,
+              "duration": 1889,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "editPage.verifyPageLoaded().verifyTitle('Existing Title').verifyContent('Existing Content');",
+              "err": {},
+              "uuid": "2ad5f363-5eed-4f35-a889-87894f6c03d3",
+              "parentUUID": "fe17edb9-fd69-4f28-bd9a-73f50d7c28b9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should update announcement successfully",
+              "fullTitle": "Edit Announcement should update announcement successfully",
+              "timedOut": null,
+              "duration": 1603,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockUpdateAnnouncement(announcementId);\neditPage.updateForm('Updated Title', 'Updated Content').submit();\ncy.wait('@updateAnnouncement');\ncy.url().should('include', '/announcements');",
+              "err": {},
+              "uuid": "0d0db470-80ec-4ea6-bce0-58bb4dc15e3c",
+              "parentUUID": "fe17edb9-fd69-4f28-bd9a-73f50d7c28b9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should cancel editing",
+              "fullTitle": "Edit Announcement should cancel editing",
+              "timedOut": null,
+              "duration": 603,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "editPage.cancel();\ncy.url().should('not.include', '/editAnnouncements');",
+              "err": {},
+              "uuid": "6a540025-6780-49d2-9486-ff6492aafa7c",
+              "parentUUID": "fe17edb9-fd69-4f28-bd9a-73f50d7c28b9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle update errors",
+              "fullTitle": "Edit Announcement should handle update errors",
+              "timedOut": null,
+              "duration": 1392,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockError('PUT', `**/api/announcements/${announcementId}**`, 500);\neditPage.updateForm('Updated Title', 'Updated Content').submit();\ncy.url().should('include', `/editAnnouncements/${announcementId}`);",
+              "err": {},
+              "uuid": "78abc53a-6c3c-4fb6-b45f-cf664a920d3f",
+              "parentUUID": "fe17edb9-fd69-4f28-bd9a-73f50d7c28b9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2ad5f363-5eed-4f35-a889-87894f6c03d3",
+            "0d0db470-80ec-4ea6-bce0-58bb4dc15e3c",
+            "6a540025-6780-49d2-9486-ff6492aafa7c",
+            "78abc53a-6c3c-4fb6-b45f-cf664a920d3f"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5487,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

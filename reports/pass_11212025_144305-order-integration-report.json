@@ -1,0 +1,132 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:12:59.638Z",
+    "end": "2025-11-21T09:13:05.141Z",
+    "duration": 5503,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d7529bfb-a77d-4b5d-a755-f0ec9319e2e1",
+      "title": "",
+      "fullFile": "cypress/e2e/order/order-integration.cy.js",
+      "file": "cypress/e2e/order/order-integration.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "ebe8a4c0-8a96-4e92-953c-6b1a6932b02c",
+          "title": "Order Management Integration",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should navigate through order management workflow",
+              "fullTitle": "Order Management Integration should navigate through order management workflow",
+              "timedOut": null,
+              "duration": 4874,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Start with empty dashboard\n_orderApiHelpers.default.mockGetOrders([]);\ndashboardPage.visit();\ndashboardPage.verifyNoDataMessage();\n// Navigate to add order page\ndashboardPage.clickAddNewOrder();\ncy.url().should('include', '/addOrder');\naddPage.verifyPageLoaded();\n// Fill form with test data (but don't submit to avoid complex integration)\nconst testOrder = _orderDataGenerators.default.getValidOrderData();\naddPage.fillForm(testOrder);\n// Navigate back to dashboard\ncy.go('back');\ncy.url().should('include', '/orderDashboard');",
+              "err": {},
+              "uuid": "f1feb88a-f930-4176-a118-2ae996874414",
+              "parentUUID": "ebe8a4c0-8a96-4e92-953c-6b1a6932b02c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display mock orders in dashboard",
+              "fullTitle": "Order Management Integration should display mock orders in dashboard",
+              "timedOut": null,
+              "duration": 487,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Mock orders directly\nconst mockOrders = _orderDataGenerators.default.generateMultipleOrders(2);\n_orderApiHelpers.default.mockGetOrders(mockOrders);\ndashboardPage.visit();\ncy.wait('@getOrders');\n// Verify mock orders are displayed\ndashboardPage.verifyOrderExists('Customer 1');\ndashboardPage.verifyOrderExists('Customer 2');",
+              "err": {},
+              "uuid": "845f1d4d-bd42-4db9-8734-0b8423982301",
+              "parentUUID": "ebe8a4c0-8a96-4e92-953c-6b1a6932b02c",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "f1feb88a-f930-4176-a118-2ae996874414",
+            "845f1d4d-bd42-4db9-8734-0b8423982301"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5361,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

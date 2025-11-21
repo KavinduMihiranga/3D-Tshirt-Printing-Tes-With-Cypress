@@ -1,0 +1,170 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:03:21.809Z",
+    "end": "2025-11-21T09:03:26.878Z",
+    "duration": 5069,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "edfc5d7e-160f-4152-bbd0-1de9b182770b",
+      "title": "",
+      "fullFile": "cypress/e2e/announcement/add-announcement.cy.js",
+      "file": "cypress/e2e/announcement/add-announcement.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "92bccad7-92e2-462b-8a94-6a17b63ad0ca",
+          "title": "Add Announcement",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display add announcement form",
+              "fullTitle": "Add Announcement should display add announcement form",
+              "timedOut": null,
+              "duration": 1764,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "addPage.verifyPageLoaded();\ncy.get('input[name=\"title\"]').should('be.visible');\ncy.get('textarea[name=\"content\"]').should('be.visible');\ncy.contains('button', 'Save Announcement').should('be.visible');",
+              "err": {},
+              "uuid": "6e981869-0a5f-4a10-8ce9-22de8fb0ea83",
+              "parentUUID": "92bccad7-92e2-462b-8a94-6a17b63ad0ca",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should submit announcement successfully",
+              "fullTitle": "Add Announcement should submit announcement successfully",
+              "timedOut": null,
+              "duration": 2032,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockCreateAnnouncement();\naddPage.fillForm(validData.title, validData.content).submit();\ncy.wait('@createAnnouncement');\ncy.url().should('include', '/announcements');",
+              "err": {},
+              "uuid": "080bc114-423f-4884-8db5-fd7b3a3eaab0",
+              "parentUUID": "92bccad7-92e2-462b-8a94-6a17b63ad0ca",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should cancel and navigate away",
+              "fullTitle": "Add Announcement should cancel and navigate away",
+              "timedOut": null,
+              "duration": 560,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "addPage.cancel();\ncy.url().should('not.include', '/addAnnouncement');",
+              "err": {},
+              "uuid": "fcd18c3e-efa7-4420-86b4-8aa4948e5348",
+              "parentUUID": "92bccad7-92e2-462b-8a94-6a17b63ad0ca",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle validation errors",
+              "fullTitle": "Add Announcement should handle validation errors",
+              "timedOut": null,
+              "duration": 510,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_announcementApiHelpers.default.mockError('POST', '**/api/announcements**', 400);\naddPage.submit();\ncy.url().should('include', '/addAnnouncement');",
+              "err": {},
+              "uuid": "a26ce5d5-de9a-4297-b540-911d91896259",
+              "parentUUID": "92bccad7-92e2-462b-8a94-6a17b63ad0ca",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "6e981869-0a5f-4a10-8ce9-22de8fb0ea83",
+            "080bc114-423f-4884-8db5-fd7b3a3eaab0",
+            "fcd18c3e-efa7-4420-86b4-8aa4948e5348",
+            "a26ce5d5-de9a-4297-b540-911d91896259"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4866,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-11-21T09:12:26.049Z",
+    "end": "2025-11-21T09:12:35.019Z",
+    "duration": 8970,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "e46f5def-81c1-4cbd-a573-9b28cdcd4341",
+      "title": "",
+      "fullFile": "cypress/e2e/order/add-order.cy.js",
+      "file": "cypress/e2e/order/add-order.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "23ae87d7-850e-4555-a783-5c2c287acf64",
+          "title": "Add Order",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display add order form with all fields",
+              "fullTitle": "Add Order should display add order form with all fields",
+              "timedOut": null,
+              "duration": 1973,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "addPage.verifyPageLoaded().verifyFormFields();\ncy.contains('button', 'Cancel').should('be.visible');",
+              "err": {},
+              "uuid": "746de94e-e622-4b65-ab6c-eee5bf9b38c6",
+              "parentUUID": "23ae87d7-850e-4555-a783-5c2c287acf64",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should submit order form successfully",
+              "fullTitle": "Add Order should submit order form successfully",
+              "timedOut": null,
+              "duration": 2708,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_orderApiHelpers.default.mockCreateOrder();\nconst validData = _orderDataGenerators.default.getValidOrderData();\naddPage.fillForm(validData).submit();\ncy.wait('@createOrder');\ncy.url().should('match', /\\/orderDashboard|\\/order/);",
+              "err": {},
+              "uuid": "e6516189-e419-40ca-b5b6-6c18065ace11",
+              "parentUUID": "23ae87d7-850e-4555-a783-5c2c287acf64",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle form validation errors",
+              "fullTitle": "Add Order should handle form validation errors",
+              "timedOut": null,
+              "duration": 556,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_orderApiHelpers.default.mockValidationError('POST', 'order');\naddPage.submit();\ncy.url().should('include', '/addOrder');",
+              "err": {},
+              "uuid": "bdea9f4d-b7f4-4175-9e5c-14f6bb860a9e",
+              "parentUUID": "23ae87d7-850e-4555-a783-5c2c287acf64",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should cancel and navigate back",
+              "fullTitle": "Add Order should cancel and navigate back",
+              "timedOut": null,
+              "duration": 513,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "addPage.clickCancel();\ncy.url().should('not.include', '/addOrder');",
+              "err": {},
+              "uuid": "c6e59d58-c3e7-4b25-923e-00fa1241ed4d",
+              "parentUUID": "23ae87d7-850e-4555-a783-5c2c287acf64",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should close form using X button",
+              "fullTitle": "Add Order should close form using X button",
+              "timedOut": null,
+              "duration": 521,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "addPage.clickCloseButton();\ncy.url().should('not.include', '/addOrder');",
+              "err": {},
+              "uuid": "20cde635-b301-4d0f-a3e5-5e9e386cd944",
+              "parentUUID": "23ae87d7-850e-4555-a783-5c2c287acf64",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle network errors during submission",
+              "fullTitle": "Add Order should handle network errors during submission",
+              "timedOut": null,
+              "duration": 2414,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_orderApiHelpers.default.mockNetworkError('POST', 'order');\nconst validData = _orderDataGenerators.default.getValidOrderData();\naddPage.fillForm(validData).submit();\ncy.url().should('include', '/addOrder');",
+              "err": {},
+              "uuid": "d8e538b5-2638-47e5-ae76-0b9527955c10",
+              "parentUUID": "23ae87d7-850e-4555-a783-5c2c287acf64",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "746de94e-e622-4b65-ab6c-eee5bf9b38c6",
+            "e6516189-e419-40ca-b5b6-6c18065ace11",
+            "bdea9f4d-b7f4-4175-9e5c-14f6bb860a9e",
+            "c6e59d58-c3e7-4b25-923e-00fa1241ed4d",
+            "20cde635-b301-4d0f-a3e5-5e9e386cd944",
+            "d8e538b5-2638-47e5-ae76-0b9527955c10"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 8685,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "mmddyyyy_HHMMss",
+        "screenshots": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveJson": true,
+        "saveHtml": true,
+        "reportFilename": "[status]_[datetime]-[name]-report",
+        "charts": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}
