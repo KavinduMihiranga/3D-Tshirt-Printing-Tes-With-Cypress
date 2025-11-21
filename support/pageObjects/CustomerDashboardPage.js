@@ -12,7 +12,8 @@ class CustomerDashboardPage extends BasePage {
       exportButton: 'Export Excel',
       searchInput: 'input[placeholder="Search Customer..."]',
       loadingText: 'Loading...',
-      noDataText: 'No Customer found.',
+      noDataText: 'No Customers found.',
+      noSearchResultsText: 'No customers match your search.', 
       tableHeaders: {
         name: 'Name',
         email: 'Email',
@@ -93,7 +94,18 @@ class CustomerDashboardPage extends BasePage {
   }
 
   verifyNoDataMessage() {
-    this.verifyText(this.selectors.noDataText);
+      cy.contains(/(No customers found|No customers match your search)\.?/)
+      .should('be.visible');
+  }
+
+    // ADDED: Specific method for empty state (no search)
+  verifyEmptyState() {
+    cy.contains('No customers found.').should('be.visible');
+  }
+
+  // ADDED: Specific method for no search results
+  verifyNoSearchResults() {
+    cy.contains('No customers match your search.').should('be.visible');
   }
 
   verifyLoadingState() {

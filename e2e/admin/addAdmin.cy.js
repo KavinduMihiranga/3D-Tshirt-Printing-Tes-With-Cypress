@@ -91,28 +91,46 @@ describe('Add Admin Form Tests', () => {
     it('should submit successfully with valid data', () => {
        const newAdmin = AdminDataGenerators.generateFormData();
     
+        // Setup authentication BEFORE visiting the page
+    cy.window().then((win) => {
+      win.localStorage.setItem('adminToken', 'mock-valid-token-for-testing');
+      win.localStorage.setItem('adminUser', JSON.stringify({
+        id: 'mock-admin-id',
+        username: 'testadmin',
+        role: 'admin'
+      }));
+    });
+
     AdminApiHelpers.mockCreateAdmin({
       message: 'Admin added successfully',
       data: { _id: '123' }
     });
+
+     // Mock the dashboard API call that happens after redirect
+    cy.intercept('GET', '**/api/admin**', {
+      statusCode: 200,
+      body: { 
+        message: 'Success', 
+        data: [] 
+      }
+    }).as('getAdmins');
 
     addAdminPage.fillAdminForm(newAdmin);
     addAdminPage.submitForm();
     
     AdminApiHelpers.waitForApi('createAdmin');
     
+      cy.wait('@getAdmins');
+
     // Handle both success and session expiry scenarios
-    cy.url().then((currentUrl) => {
-      if (currentUrl.includes('/login')) {
-        // Session expired - this might be acceptable behavior
-        cy.log('Session expired after submission - this might be expected');
-        // You could optionally re-login here and verify the admin was created
-      } else {
-        // Success case - verify dashboard
-        cy.url().should('include', '/adminDashboard');
-      }
+      // Verify success alert
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal('Admin added successfully!');
     });
-    });
+    
+    // Verify navigation to dashboard
+    cy.url().should('include', '/adminDashboard');
+  });
 
     it('should handle API validation errors', () => {
       const admin = AdminDataGenerators.generateFormData();
